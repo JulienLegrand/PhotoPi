@@ -72,6 +72,9 @@ def LivePreview():
 	print "Playing live preview"
 	os.popen("omxplayer " + liveMovie + " --live")
 	
+	#Deleting live preview
+	os.remove(liveMovie)
+	
 def TakePictures():
 	pic1 = TakeOnePicture("Smile :)")
 	pic2 = TakeOnePicture("~ Party ~")
