@@ -76,18 +76,20 @@ def LivePreview():
 	os.remove(liveMovie)
 	
 def TakePictures():
-	pic1 = TakeOnePicture("Smile :)")
-	pic2 = TakeOnePicture("~ Party ~")
-	pic3 = TakeOnePicture(".: More fun :.")
-	pic4 = TakeOnePicture("The last one :D")
-	Composite(pic1,pic2,pic3,pic4)
+	#Attribute a name with current time for all photos and composite
+	photoFile = dt.datetime.now().strftime("%Y%m%d-%Hh%Mm%S")
+	pic1 = TakeOnePicture("Smile :)", photoFile + "-1")
+	pic2 = TakeOnePicture("~ Party ~", photoFile + "-2")
+	pic3 = TakeOnePicture(".: More fun :.", photoFile + "-3")
+	pic4 = TakeOnePicture("The last one :D", photoFile + "-4")
+	Composite(pic1,pic2,pic3,pic4, photoFile)
 	
-def TakeOnePicture(message):
+def TakeOnePicture(message, photoFile):
 	DrawCenterMessage("3",True)
 	DrawCenterMessage("2",True)
 	DrawCenterMessage("1",True)
 	DrawCenterMessage(message,True,False)
-	photoFile = "photos/Capture-" + dt.datetime.now().strftime("%y%m%d%H%M%S") + ".jpg"
+	photoFile = "photos/" + photoFile + ".jpg"
 	
 	# Test if DSLR is ready by reading Gphoto2 summary and finding or not the french word "Erreur" (Error)
 	p = sub.Popen('gphoto2 --summary',stdout=sub.PIPE,stderr=sub.PIPE,shell=True)
@@ -97,19 +99,9 @@ def TakeOnePicture(message):
 	
 	os.popen("gphoto2 --capture-image-and-download --filename " + photoFile + " --force-overwrite &")
 	sleep(4)
-	
-	# Code for a preview of each image
-	#WaitLogo()
-	#while os.path.exists(photoFile) == False: # Wait for creation
-	#	time.sleep(.1)
-	#image = pygame.image.load(photoFile)
-	#image = pygame.transform.scale(image, (width, height))
-	#screen.blit(image, (0,0))
-	#pygame.display.flip()
-	#sleep(3)
 	return photoFile
 	
-def Composite(pic1,pic2,pic3,pic4):
+def Composite(pic1,pic2,pic3,pic4, photoFile):
 	#Create composite image 
 	WaitLogo()
 	while os.path.exists(pic1) == False: # Wait for creation
@@ -137,8 +129,10 @@ def Composite(pic1,pic2,pic3,pic4):
 	screen.blit(pbimage3, (253.33,443.86))
 	screen.blit(pbimage4, (998.67,443.86))
 	pygame.display.flip()
-	 
-	pygame.image.save(screen, "photos/Composite-" + dt.datetime.now().strftime("%y%m%d%H%M%S") + ".jpg")
+	
+	if not os.path.isdir("composites") :
+		os.makedirs("composites")
+	pygame.image.save(screen, "Composites/" + photoFile + ".jpg")
 	sleep(10)
 	#pygame.display.flip()
 # End Functions

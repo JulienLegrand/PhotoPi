@@ -1,6 +1,7 @@
 # Custom rules
 
 photos/
+composites/
 fifo.mjpg
 
 # Created by https://www.gitignore.io/api/python
