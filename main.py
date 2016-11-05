@@ -133,18 +133,25 @@ def Composite(pic1,pic2,pic3,pic4, photoFile):
 	pbimage4 = pygame.image.load(pic4)
 	pbimage4 = pygame.transform.scale(pbimage4, (imageWidth,imageHeight))
 	
-	screen.fill(white)	
-	screen.blit(pbimage1, (borderWidth, borderHeight))
-	screen.blit(pbimage2, (2*borderWidth+imageWidth, borderHeight))
-	screen.blit(pbimage3, (borderWidth, 2*borderHeight+imageHeight))
-	screen.blit(pbimage4, (2*borderWidth+imageWidth, 2*borderHeight+imageHeight))
-	pygame.display.flip()
+	i = 50
+	while(i<=225):
+		screen.fill(white)
+		pbimage1.set_alpha(i)
+		pbimage2.set_alpha(i)
+		pbimage3.set_alpha(i)
+		pbimage4.set_alpha(i)
+		screen.blit(pbimage1, (borderWidth, borderHeight))
+		screen.blit(pbimage2, (2*borderWidth+imageWidth, borderHeight))
+		screen.blit(pbimage3, (borderWidth, 2*borderHeight+imageHeight))
+		screen.blit(pbimage4, (2*borderWidth+imageWidth, 2*borderHeight+imageHeight))
+		pygame.display.flip()
+		#pygame.time.delay(5)
+		i += 5
 	
 	if not os.path.isdir("composites") :
 		os.makedirs("composites")
 	pygame.image.save(screen, "composites/" + photoFile + ".jpg")
 	sleep(10)
-	#pygame.display.flip()
 # End Functions
 
 # Demarrage
