@@ -90,7 +90,10 @@ def TakeOnePicture(message, photoFile):
 	DrawCenterMessage("2",True)
 	DrawCenterMessage("1",True)
 	DrawCenterMessage(message,True,False)
+	
 	photoFile = "photos/" + photoFile + ".jpg"
+	if not os.path.isdir("photos") :
+		os.makedirs("photos")
 	
 	# Test if DSLR is ready by reading Gphoto2 summary and finding or not the french word "Erreur" (Error)
 	p = sub.Popen('gphoto2 --summary',stdout=sub.PIPE,stderr=sub.PIPE,shell=True)
