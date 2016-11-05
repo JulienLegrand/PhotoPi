@@ -11,7 +11,7 @@ import subprocess as sub
 liveMovie = "fifo.mjpg"
 previewDuration = 10 #secondes
 width = 1280
-height = 980
+height = 1024
 font = "DejaVuSerif-Bold"
 waitLogoImage = "wait.gif"
 logo_size = 500
@@ -108,30 +108,36 @@ def TakeOnePicture(message, photoFile):
 def Composite(pic1,pic2,pic3,pic4, photoFile):
 	#Create composite image 
 	WaitLogo()
+	borderWidth = 20
+	imageWidth = (width-3*borderWidth)/2
+	imageHeight = imageWidth*2/3 #only work in landscape mode with 3/2 ratio
+	borderHeight = (height-2*imageHeight)/3
+	
 	while os.path.exists(pic1) == False: # Wait for creation
 		sleep(.1)
 	pbimage1 = pygame.image.load(pic1)
-	pbimage1 = pygame.transform.scale(pbimage1, (522,348))
+	pbimage1 = pygame.transform.scale(pbimage1, (imageWidth,imageHeight))
 	
 	while os.path.exists(pic2) == False: # Wait for creation
 		sleep(.1)
 	pbimage2 = pygame.image.load(pic2)
-	pbimage2 = pygame.transform.scale(pbimage2, (522,348))
+	pbimage2 = pygame.transform.scale(pbimage2, (imageWidth,imageHeight))
 	
 	while os.path.exists(pic3) == False: # Wait for creation
 		sleep(.1)
 	pbimage3 = pygame.image.load(pic3)
-	pbimage3 = pygame.transform.scale(pbimage3, (522,348))
+	pbimage3 = pygame.transform.scale(pbimage3, (imageWidth,imageHeight))
 	
 	while os.path.exists(pic4) == False: # Wait for creation
 		sleep(.1)
 	pbimage4 = pygame.image.load(pic4)
-	pbimage4 = pygame.transform.scale(pbimage4, (522,348))
-	 
-	screen.blit(pbimage1, (253.33,79.33))
-	screen.blit(pbimage2, (998.67,79.33))
-	screen.blit(pbimage3, (253.33,443.86))
-	screen.blit(pbimage4, (998.67,443.86))
+	pbimage4 = pygame.transform.scale(pbimage4, (imageWidth,imageHeight))
+	
+	screen.fill(white)	
+	screen.blit(pbimage1, (borderWidth, borderHeight))
+	screen.blit(pbimage2, (2*borderWidth+imageWidth, borderHeight))
+	screen.blit(pbimage3, (borderWidth, 2*borderHeight+imageHeight))
+	screen.blit(pbimage4, (2*borderWidth+imageWidth, 2*borderHeight+imageHeight))
 	pygame.display.flip()
 	
 	if not os.path.isdir("composites") :
