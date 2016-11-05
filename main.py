@@ -69,6 +69,7 @@ def LivePreview():
 	os.popen("gphoto2 --capture-movie=" + str(previewDuration) + "s --stdout> " + liveMovie + " &")
 
 	# Playing live preview
+	DrawCenterMessage("") #Clean screen before preview
 	print "Playing live preview"
 	os.popen("omxplayer " + liveMovie + " --live")
 	
@@ -132,7 +133,7 @@ def Composite(pic1,pic2,pic3,pic4, photoFile):
 	
 	if not os.path.isdir("composites") :
 		os.makedirs("composites")
-	pygame.image.save(screen, "Composites/" + photoFile + ".jpg")
+	pygame.image.save(screen, "composites/" + photoFile + ".jpg")
 	sleep(10)
 	#pygame.display.flip()
 # End Functions
