@@ -21,7 +21,8 @@ def Start():
 	# Playing live preview
 	pygameEngine.DrawCenterMessage("") #Clean screen before preview
 	print "Playing live preview"
-	os.popen("omxplayer " + liveMovie + " --live")
+	if(not Camera.debug):
+		os.popen("omxplayer " + liveMovie + " --live")
 	
 	#Deleting live preview
 	os.remove(liveMovie)

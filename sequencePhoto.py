@@ -29,7 +29,7 @@ def TakeOnePicture(message, photoFile):
 		os.makedirs("photos")
 	
 	Camera.WaitCamera()
-	Camera.TakePhoto(photoFile)
+	photoFile = Camera.TakePhoto(photoFile)
 	
 	sleep(4)
 	return photoFile
