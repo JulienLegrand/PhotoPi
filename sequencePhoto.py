@@ -19,7 +19,6 @@ black = pygame.Color(0,0,0)
 white = pygame.Color(255,255,255)
 screen = pygame.display.set_mode((width,height),pygame.FULLSCREEN)#FULLSCREEN
 
-# Functions
 def DrawCenterMessage(message,big=False,withSleep=True):
 	"""displays notification messages onto the screen"""
 	if big:
@@ -46,7 +45,6 @@ def DrawTopMessage(message):
 	
 def WaitLogo():
 	""" Draw title """
-	#logo = pygame.transform.scale(pygame.image.load("anomaly_transparent_white.png"),(logosize[0],logosize[1]))
 	# image
 	screen.fill(black)
 	image = pygame.image.load(waitLogoImage)
@@ -57,8 +55,6 @@ def WaitLogo():
 	image_surface = pygame.transform.scale(image.subsurface(image_square),(logo_size,logo_size))
 	image_Rect = image_surface.get_rect()
 	image_Rect.center = ((width/2),(height/2))
-	#screen.blit(image_surface,(width-logo_size-20,height-logo_size-20))
-	#screen.blit(image_surface, ((0.5 * width) - (0.5 *width-logo_size), (0.5 * height) - (0.5 *height-logo_size)))
 	screen.blit(image_surface, image_Rect)
 	pygame.display.update()
 	
@@ -148,8 +144,8 @@ def Composite(pic1,pic2,pic3,pic4, photoFile):
 		screen.blit(pbimage3, (borderWidth, 2*borderHeight+imageHeight))
 		screen.blit(pbimage4, (2*borderWidth+imageWidth, 2*borderHeight+imageHeight))
 		pygame.display.flip()
-		#pygame.time.delay(5)
-		i += 5
+		#pygame.time.delay(5) #To slow animation
+		i += 5 #To speed up animation
 	
 	if not os.path.isdir("composites") :
 		os.makedirs("composites")
@@ -159,4 +155,3 @@ def Composite(pic1,pic2,pic3,pic4, photoFile):
 def Start():
 	LivePreview()
 	TakePictures()
-# End Functions
