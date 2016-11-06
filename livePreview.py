@@ -16,7 +16,7 @@ def Start():
 	if os.path.exists(liveMovie):
 		os.remove(liveMovie)
 	os.mkfifo(liveMovie)
-	Camera.RecordMovie(liveMovie, previewDuration)
+	Camera.RecordPreview(liveMovie, previewDuration)
 
 	# Playing live preview
 	pygameEngine.DrawCenterMessage("") #Clean screen before preview

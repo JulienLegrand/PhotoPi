@@ -39,6 +39,10 @@ def TakePhoto(photoFile):
 	else:
 		return "debug.jpg"
 	
-def RecordMovie(liveMovie, previewDuration):
+def RecordPreview(liveMovie, previewDuration):
 	if(not debug):
 		os.popen("gphoto2 --capture-movie=" + str(previewDuration) + "s --stdout> " + liveMovie + " &")
+		
+def RecordMovie(movieFile, previewDuration):
+	if(not debug):
+		os.popen("gphoto2 --capture-movie=" + str(previewDuration) + "s --stdout> " + movieFile + " &")

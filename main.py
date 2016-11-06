@@ -4,6 +4,7 @@ import pygameEngine
 import os
 from time import sleep
 import sequencePhoto
+import sequenceVideo
 import Camera
 
 # drops other possible connections to the camera on every restart just to be safe
@@ -29,11 +30,11 @@ while(1):
 
 	action = pygameEngine.CheckAction()
 	if(action==1):
-		#import sequencePhoto
 		sequencePhoto.Start()
 		pygameEngine.ClearActionsQueue()
 	if(action==2):
-		print "Right click" #TODO : sequenceVideo
+		sequenceVideo.Start()
+		pygameEngine.ClearActionsQueue()
 
 # Fin
 print "End"
