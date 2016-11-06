@@ -32,19 +32,17 @@ while(1):
 	screen.fill(black)
 	pygame.display.update()
 
-	# get all events
-	ev = pygame.event.get()
+	# get one event
+	event = pygame.event.poll()
 
-	# proceed events
-	for event in ev:
-
-		# handle MOUSEBUTTONUP
-		if event.type == pygame.MOUSEBUTTONUP:
-			if(event.button==1):
-				#import sequencePhoto
-				sequencePhoto.Start()
-			if(event.button==3):
-				print "Right click" #TODO : sequenceVideo
+	# handle MOUSEBUTTONUP
+	if event.type == pygame.MOUSEBUTTONUP:
+		if(event.button==1):
+			#import sequencePhoto
+			sequencePhoto.Start()
+			pygame.event.clear() #Clear events in the queue (button pressed during the sequence)
+		if(event.button==3):
+			print "Right click" #TODO : sequenceVideo
 
 # Fin
 print "End"
