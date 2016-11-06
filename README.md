@@ -12,6 +12,7 @@ Software :
 - Raspbian Jessie
 - Python
 - Gphoto2
+- OmxPlayer
 
 Credits :
 Made with code from : (non exhaustive)

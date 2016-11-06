@@ -6,75 +6,9 @@ import os
 import pygame
 import os.path
 import subprocess as sub
+import pygameEngine
+import livePreview
 
-# Variables
-liveMovie = "fifo.mjpg"
-previewDuration = 10 #secondes
-width = 1280
-height = 1024
-font = "DejaVuSerif-Bold"
-waitLogoImage = "wait.gif"
-logo_size = 500
-black = pygame.Color(0,0,0)
-white = pygame.Color(255,255,255)
-screen = pygame.display.set_mode((width,height),pygame.FULLSCREEN)#FULLSCREEN
-
-def DrawCenterMessage(message,big=False,withSleep=True):
-	"""displays notification messages onto the screen"""
-	if big:
-		fontsize = 160
-	else:
-		fontsize = 60
-	screen.fill(black)
-	TextSurf = pygame.font.SysFont(font,fontsize).render(message, True, white)
-	TextRect = TextSurf.get_rect()
-	TextRect.center = ((width/2),(height/2))
-	screen.blit(TextSurf, TextRect)
-	pygame.display.update()
-	if withSleep:
-		sleep(1)
-    
-def DrawTopMessage(message):
-	"""displays notification messages onto the screen"""
-	screen.fill(black)
-	TextSurf = pygame.font.SysFont(font,40).render(message, True, white)
-	TextRect = TextSurf.get_rect()
-	TextRect.center = ((width/2),(80))
-	screen.blit(TextSurf, TextRect)
-	pygame.display.update()
-	
-def WaitLogo():
-	""" Draw title """
-	# image
-	screen.fill(black)
-	image = pygame.image.load(waitLogoImage)
-
-	# crop middle square and resize
-	imgsize = image.get_rect().size
-	image_square = pygame.Rect((imgsize[0]-imgsize[1])/2, 0, imgsize[1], imgsize[1]) # left, top, width, height
-	image_surface = pygame.transform.scale(image.subsurface(image_square),(logo_size,logo_size))
-	image_Rect = image_surface.get_rect()
-	image_Rect.center = ((width/2),(height/2))
-	screen.blit(image_surface, image_Rect)
-	pygame.display.update()
-	
-def LivePreview():
-	# Start recording live preview
-	DrawCenterMessage("Prepare for fun",True)
-	print "Start recording live preview"
-	if os.path.exists(liveMovie):
-		os.remove(liveMovie)
-	os.mkfifo(liveMovie)
-	os.popen("gphoto2 --capture-movie=" + str(previewDuration) + "s --stdout> " + liveMovie + " &")
-
-	# Playing live preview
-	DrawCenterMessage("") #Clean screen before preview
-	print "Playing live preview"
-	os.popen("omxplayer " + liveMovie + " --live")
-	
-	#Deleting live preview
-	os.remove(liveMovie)
-	
 def TakePictures():
 	#Attribute a name with current time for all photos and composite
 	photoFile = dt.datetime.now().strftime("%Y%m%d-%Hh%Mm%S")
@@ -85,10 +19,10 @@ def TakePictures():
 	Composite(pic1,pic2,pic3,pic4, photoFile)
 	
 def TakeOnePicture(message, photoFile):
-	DrawCenterMessage("3",True)
-	DrawCenterMessage("2",True)
-	DrawCenterMessage("1",True)
-	DrawCenterMessage(message,True,False)
+	pygameEngine.DrawCenterMessage("3",True)
+	pygameEngine.DrawCenterMessage("2",True)
+	pygameEngine.DrawCenterMessage("1",True)
+	pygameEngine.DrawCenterMessage(message,True,False)
 	
 	photoFile = "photos/" + photoFile + ".jpg"
 	if not os.path.isdir("photos") :
@@ -105,12 +39,14 @@ def TakeOnePicture(message, photoFile):
 	return photoFile
 	
 def Composite(pic1,pic2,pic3,pic4, photoFile):
+	screen = pygameEngine.GetScreen()
+	
 	#Create composite image 
-	WaitLogo()
+	pygameEngine.WaitLogo()
 	borderWidth = 20
-	imageWidth = (width-3*borderWidth)/2
+	imageWidth = (pygameEngine.width-3*borderWidth)/2
 	imageHeight = imageWidth*2/3 #only work in landscape mode with 3/2 ratio
-	borderHeight = (height-2*imageHeight)/3
+	borderHeight = (pygameEngine.height-2*imageHeight)/3
 	
 	while os.path.exists(pic1) == False: # Wait for creation
 		sleep(.1)
@@ -134,7 +70,7 @@ def Composite(pic1,pic2,pic3,pic4, photoFile):
 	
 	i = 50
 	while(i<=255):
-		screen.fill(white)
+		screen.fill(pygameEngine.white)
 		pbimage1.set_alpha(i)
 		pbimage2.set_alpha(i)
 		pbimage3.set_alpha(i)
@@ -153,5 +89,5 @@ def Composite(pic1,pic2,pic3,pic4, photoFile):
 	sleep(10)
 	
 def Start():
-	LivePreview()
+	#livePreview.Start()
 	TakePictures()
