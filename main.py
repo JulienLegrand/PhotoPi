@@ -4,6 +4,7 @@ import pygameEngine
 import os
 from time import sleep
 import sequencePhoto
+import Camera
 
 # drops other possible connections to the camera on every restart just to be safe
 os.system("sudo pkill gvfs")
@@ -13,6 +14,9 @@ os.environ['SDL_VIDEO_WINDOW_POS'] = "0,0"
 app_name = "PhotoPi"
 print app_name + " started"
 sleep(2)
+
+#Self test
+if(Camera.CheckCamera() == -1) : raise Exception('No camera detected!')
 
 #Start
 pygameEngine.init(app_name)

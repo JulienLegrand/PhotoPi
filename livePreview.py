@@ -3,6 +3,7 @@
 import os
 import os.path
 import pygameEngine
+import Camera
 
 # Variables
 liveMovie = "fifo.mjpg"
@@ -15,7 +16,7 @@ def Start():
 	if os.path.exists(liveMovie):
 		os.remove(liveMovie)
 	os.mkfifo(liveMovie)
-	os.popen("gphoto2 --capture-movie=" + str(previewDuration) + "s --stdout> " + liveMovie + " &")
+	Camera.RecordMovie(liveMovie, previewDuration)
 
 	# Playing live preview
 	pygameEngine.DrawCenterMessage("") #Clean screen before preview

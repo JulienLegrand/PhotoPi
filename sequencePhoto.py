@@ -5,9 +5,9 @@ import datetime as dt
 import os
 import pygame
 import os.path
-import subprocess as sub
 import pygameEngine
 import livePreview
+import Camera
 
 def TakePictures():
 	#Attribute a name with current time for all photos and composite
@@ -28,13 +28,9 @@ def TakeOnePicture(message, photoFile):
 	if not os.path.isdir("photos") :
 		os.makedirs("photos")
 	
-	# Test if DSLR is ready by reading Gphoto2 summary and finding or not the french word "Erreur" (Error)
-	p = sub.Popen('gphoto2 --summary',stdout=sub.PIPE,stderr=sub.PIPE,shell=True)
-	while(str(p.communicate()).find("Erreur") != -1):
-		sleep(.1)
-		p = sub.Popen('gphoto2 --summary',stdout=sub.PIPE,stderr=sub.PIPE,shell=True)
+	Camera.WaitCamera()
+	Camera.TakePhoto(photoFile)
 	
-	os.popen("gphoto2 --capture-image-and-download --filename " + photoFile + " --force-overwrite &")
 	sleep(4)
 	return photoFile
 	
@@ -89,5 +85,5 @@ def Composite(pic1,pic2,pic3,pic4, photoFile):
 	sleep(10)
 	
 def Start():
-	#livePreview.Start()
+	livePreview.Start()
 	TakePictures()
