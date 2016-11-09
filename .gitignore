@@ -4,6 +4,9 @@ photos/
 composites/
 videos/
 fifo.mjpg
+stopmotion-photos/
+stopmotion-composites/
+stopmotion-temp/
 
 # Created by https://www.gitignore.io/api/python
 

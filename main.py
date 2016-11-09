@@ -5,6 +5,7 @@ import os
 from time import sleep
 import sequencePhoto
 import sequenceVideo
+import sequenceStopMotion
 import Camera
 
 # drops other possible connections to the camera on every restart just to be safe
@@ -33,7 +34,8 @@ while(1):
 		sequencePhoto.Start()
 		pygameEngine.ClearActionsQueue()
 	if(action==2):
-		sequenceVideo.Start()
+		#sequenceVideo.Start()
+		sequenceStopMotion.Start()
 		pygameEngine.ClearActionsQueue()
 
 # Fin

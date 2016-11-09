@@ -3,6 +3,7 @@
 import os
 import subprocess as sub
 from time import sleep
+from shutil import copyfile
 
 #keywords to find camera status in Gphoto2 --summary
 #Warning : to avoid encoding problem, i chose words without diacritics
@@ -35,9 +36,9 @@ def WaitCamera():
 def TakePhoto(photoFile):
 	if(not debug):
 		os.popen("gphoto2 --capture-image-and-download --filename " + photoFile + " --force-overwrite &")
-		return photoFile
 	else:
-		return "debug.jpg"
+		sleep(3) #Simulate shoot time
+		copyfile("debug.jpg", photoFile)
 	
 def RecordPreview(liveMovie, previewDuration):
 	if(not debug):
