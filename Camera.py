@@ -7,9 +7,9 @@ from shutil import copyfile
 
 #keywords to find camera status in Gphoto2 --summary
 #Warning : to avoid encoding problem, i chose words without diacritics
-keywordsInUse = "*** Erreur ***"
-keywordsNoCamera = "*** Erreur : aucun appareil trouv"
-keywordsCameraOk = " sur l'appareil"
+keywordsInUse = "Camera is already in use"
+keywordsNoCamera = "*** Error: No camera found. ***"
+keywordsCameraOk = "Access Capability: Read-Write"
 
 #debug variable is here to avoid using DSLR for testing
 debug=False
