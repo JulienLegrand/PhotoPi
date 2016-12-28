@@ -2,10 +2,18 @@
 
 import pygame
 from time import sleep
+import RPi.GPIO as GPIO
+
+# GPIO Setup
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(32,GPIO.IN)
+GPIO.setup(36,GPIO.IN)
 
 # Variables
 width = 1280
 height = 1024
+GPIO_NUMBER_BUTTON_1 = 36
+GPIO_NUMBER_BUTTON_2 = 32
 black = pygame.Color(0,0,0)
 white = pygame.Color(255,255,255)
 screen = pygame.display.set_mode((width,height),pygame.FULLSCREEN)#FULLSCREEN
@@ -27,16 +35,13 @@ def Fill(color):
 	pygame.display.update()
 	
 def CheckAction(): #Return -1 or 1 or 2 (Sequence 1 or 2)
-	# get one event
-	event = pygame.event.poll()
 	res = -1
 	
-	# handle MOUSEBUTTONUP
-	if event.type == pygame.MOUSEBUTTONUP:
-		if(event.button==1):
-			res = 1
-		if(event.button==3):
-			res = 2
+	# handle physical buttons (connected to GPIO)
+	if (GPIO.input(GPIO_NUMBER_BUTTON_1)):
+		res = 1
+	if (GPIO.input(GPIO_NUMBER_BUTTON_2)):
+		res = 2
 	return res
 
 def ClearActionsQueue():
