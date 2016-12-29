@@ -10,16 +10,17 @@ GPIO.setup(32,GPIO.IN)
 GPIO.setup(36,GPIO.IN)
 
 # Variables
-width = 1280
-height = 1024
+WIDTH = 1280
+HEIGHT = 1024
 GPIO_NUMBER_BUTTON_1 = 36
 GPIO_NUMBER_BUTTON_2 = 32
-black = pygame.Color(0,0,0)
-white = pygame.Color(255,255,255)
-screen = pygame.display.set_mode((width,height),pygame.FULLSCREEN)#FULLSCREEN
-waitLogoImage = "wait.gif"
-logo_size = 500
-font = "DejaVuSerif-Bold"
+BLACK_COLOR = pygame.Color(0, 0, 0)
+WHITE_COLOR = pygame.Color(255, 255, 255)
+BLUE_COLOR = pygame.Color(40, 87, 255)
+SCREEN = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
+WAIT_LOGO_FILE = "wait.gif"
+LOGO_SIZE = 500
+FONT = "DejaVuSerif-Bold"
 
 def init(app_name):
 	print "pygame init"
@@ -28,63 +29,63 @@ def init(app_name):
 	pygame.display.set_caption(app_name)
 	
 def GetScreen():
-	return screen
+	return SCREEN
 
 def Fill(color):
-	screen.fill(color)
+	SCREEN.fill(color)
 	pygame.display.update()
 	
 def CheckAction(): #Return -1 or 1 or 2 (Sequence 1 or 2)
-	res = -1
-	
-	# handle physical buttons (connected to GPIO)
-	if (GPIO.input(GPIO_NUMBER_BUTTON_1)):
-		res = 1
-	if (GPIO.input(GPIO_NUMBER_BUTTON_2)):
-		res = 2
-	return res
+    # handle physical buttons (connected to GPIO)
+    if (GPIO.input(GPIO_NUMBER_BUTTON_1)):
+    	return 1
+    if (GPIO.input(GPIO_NUMBER_BUTTON_2)):
+        return 2
+    return -1
 
 def ClearActionsQueue():
 	pygame.event.clear() #Clear events in the queue (typically when button is pressed during the sequence)
 
-def DrawCenterMessage(message,big=False,withSleep=True):
-	"""displays notification messages onto the screen"""
-	if big:
-		fontsize = 160
-	else:
-		fontsize = 60
-	screen.fill(black)
-	TextSurf = pygame.font.SysFont(font,fontsize).render(message, True, white)
+def DrawCenterMessage(message, big = False, withSleep = True):
+	"""displays notification messages onto the SCREEN"""
+	FONTsize = 160 if big else 60
+		
+	SCREEN.fill(BLACK_COLOR)
+	TextSurf = pygame.font.SysFont(FONT, FONTsize).render(message, True, WHITE_COLOR)
 	TextRect = TextSurf.get_rect()
-	TextRect.center = ((width/2),(height/2))
-	screen.blit(TextSurf, TextRect)
+	TextRect.center = ((WIDTH / 2), (HEIGHT / 2))
+	SCREEN.blit(TextSurf, TextRect)
 	pygame.display.update()
 	if withSleep:
 		sleep(1)
     
 def DrawTopMessage(message):
-	"""displays notification messages onto the screen"""
-	screen.fill(black)
-	TextSurf = pygame.font.SysFont(font,40).render(message, True, white)
+	"""displays notification messages onto the SCREEN"""
+	SCREEN.fill(BLACK_COLOR)
+	TextSurf = pygame.font.SysFont(FONT, 40).render(message, True, WHITE_COLOR)
 	TextRect = TextSurf.get_rect()
-	TextRect.center = ((width/2),(80))
-	screen.blit(TextSurf, TextRect)
+	TextRect.center = ((WIDTH / 2), (80))
+	SCREEN.blit(TextSurf, TextRect)
 	pygame.display.update()
 	
 def WaitLogo():
 	""" Draw title """
 	# image
-	screen.fill(black)
-	image = pygame.image.load(waitLogoImage)
+	SCREEN.fill(BLACK_COLOR)
+	image = pygame.image.load(WAIT_LOGO_FILE)
 
 	# crop middle square and resize
 	imgsize = image.get_rect().size
-	image_square = pygame.Rect((imgsize[0]-imgsize[1])/2, 0, imgsize[1], imgsize[1]) # left, top, width, height
-	image_surface = pygame.transform.scale(image.subsurface(image_square),(logo_size,logo_size))
+	image_square = pygame.Rect((imgsize[0] - imgsize[1]) / 2, 0, imgsize[1], imgsize[1]) # left, top, WIDTH, HEIGHT
+	image_surface = pygame.transform.scale(image.subsurface(image_square), (LOGO_SIZE, LOGO_SIZE))
 	image_Rect = image_surface.get_rect()
-	image_Rect.center = ((width/2),(height/2))
-	screen.blit(image_surface, image_Rect)
+	image_Rect.center = ((WIDTH / 2), (HEIGHT / 2))
+	SCREEN.blit(image_surface, image_Rect)
 	pygame.display.update()
+
+def ShowError():
+	SCREEN.fill(BLUE_COLOR)
+	DrawCenterMessage("Erreur", True, True)
 	
 def Quit():
 	pygame.quit()

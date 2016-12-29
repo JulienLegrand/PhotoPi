@@ -10,8 +10,8 @@ Hardware :
 
 Software :
 - Raspbian Jessie
-- Python
-- Gphoto2
+- Python 2.7.9 (Raspbian default)
+- Gphoto2 2.5.10
 - OmxPlayer
 
 Credits :

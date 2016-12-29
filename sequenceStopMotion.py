@@ -10,6 +10,10 @@ import os.path
 import pygameEngine
 import livePreview
 import Camera
+import sys
+
+# Variables
+NB_PHOTOS = 5
 
 def Init():
 	#Create folders needed
@@ -22,44 +26,45 @@ def Init():
 	Clear()
 
 def TakePictures():
-	pygameEngine.DrawCenterMessage("Go for 15 pics!",True,False)
-	pygameEngine.DrawCenterMessage("3",True)
-	pygameEngine.DrawCenterMessage("2",True)
-	pygameEngine.DrawCenterMessage("1",True)
+    pygameEngine.Fill(pygameEngine.BLACK_COLOR)
+    pygameEngine.DrawCenterMessage("Go for %d pics!" % NB_PHOTOS, True, False)
+    pygameEngine.DrawCenterMessage("3", True)
+    pygameEngine.DrawCenterMessage("2", True)
+    pygameEngine.DrawCenterMessage("1", True)
 
-	photoFile = dt.datetime.now().strftime("%Y%m%d-%Hh%Mm%S")
-	i=1
-	while(i<=15):
-		Camera.WaitCamera()
-		pygameEngine.DrawCenterMessage("[ Pose " + str(i) + " ]",True)
-		photoFilePath = "stopmotion-photos/" + photoFile + "-" + str(i).zfill(2) + ".jpg"
-		pygameEngine.Fill(pygameEngine.white)
-		Camera.TakePhoto(photoFilePath)
-		
-		#Don't wait to shrink the picture to reduce global time and don't wasting the time waiting the camera
-		photoFilePathDest = "stopmotion-temp/" + photoFile + "-" + str(i).zfill(2) + ".jpg"
-		while os.path.exists(photoFilePath) == False: # Wait for creation
-			sleep(.1)
-		copyfile(photoFilePath, photoFilePathDest)
-		p = sub.Popen('mogrify -resize 1920x1080 ' + photoFilePathDest,stdout=sub.PIPE,stderr=sub.PIPE,shell=True)
-		
-		i+=1
-	pygameEngine.WaitLogo()
-	p.wait()
-	return photoFile
-	
+    photoFile = dt.datetime.now().strftime("%Y%m%d-%Hh%Mm%S")
+    i=1
+    while(i<=NB_PHOTOS):
+        Camera.WaitCamera()
+        pygameEngine.DrawCenterMessage("[ Pose " + str(i) + " ]", True)
+        photoFilePath = "stopmotion-photos/" + photoFile + "-" + str(i).zfill(2) + ".jpg"
+        pygameEngine.Fill(pygameEngine.WHITE_COLOR)
+        Camera.TakePhoto(photoFilePath)
+
+        #Don't wait to shrink the picture to reduce global time and don't wasting the time waiting the camera
+        photoFilePathDest = "stopmotion-temp/" + photoFile + "-" + str(i).zfill(2) + ".jpg"
+        while os.path.exists(photoFilePath) == False: # Wait for creation
+            sleep(.1)
+        copyfile(photoFilePath, photoFilePathDest)
+        p = sub.Popen('mogrify -resize 1920x1080 ' + photoFilePathDest, stdout=sub.PIPE, stderr=sub.PIPE, shell=True)
+
+        i+=1
+    pygameEngine.WaitLogo()
+    p.wait()
+    return photoFile
+
 def Composite(photoFile):
 	print "Create video"
 	#os.popen don't work for this, don't know why
-	p = sub.Popen("sudo mencoder mf://stopmotion-temp/*.jpg -mf w=1920:h=1080:fps=25:type=jpg:fps=1 -nosound -ovc lavc -lavcopts vcodec=mpeg4 -oac copy -o stopmotion-temp/" + photoFile + ".mp4",stdout=sub.PIPE,stderr=sub.PIPE,shell=True)
+	p = sub.Popen("sudo mencoder mf://stopmotion-temp/*.jpg -mf w=1920:h=1080:fps=25:type=jpg:fps=1 -nosound -ovc lavc -o stopmotion-temp/" + photoFile + ".mp4", stdout=sub.PIPE, stderr=sub.PIPE, shell=True)
 	p.wait()
 	
 	#Add music
-	p = sub.Popen("sudo avconv -i stopmotion-temp/" + photoFile + ".mp4 -i music.mp3 -c copy -map 0:v -map 1:a -shortest stopmotion-composites/" + photoFile + ".mp4 -y",stdout=sub.PIPE,stderr=sub.PIPE,shell=True)
+	p = sub.Popen("sudo avconv -i stopmotion-temp/" + photoFile + ".mp4 -i music.mp3 -c copy -map 0:v -map 1:a -shortest stopmotion-composites/" + photoFile + ".mp4 -y", stdout=sub.PIPE, stderr=sub.PIPE, shell=True)
 	p.wait()
 
 	#Play
-	pygameEngine.Fill(pygameEngine.black)
+	pygameEngine.Fill(pygameEngine.BLACK_COLOR)
 	os.popen("omxplayer stopmotion-composites/" + photoFile + ".mp4")
 
 def Clear():
@@ -69,11 +74,15 @@ def Clear():
 		os.remove("stopmotion-temp/" + f)
 	
 def Start():
-	print "Stop-Motion Start"
-	livePreview.Start()
-	Init()
-	photoFile = TakePictures()
-	Composite(photoFile)
-	
-	Clear()
-	print "Stop-Motion End"
+	try:
+		print "Stop-Motion Start"
+		livePreview.Start()
+		Init()
+		photoFile = TakePictures()
+		Composite(photoFile)
+		
+		#Clear()
+		print "Stop-Motion End"
+	except Exception, e:
+		print "ERREUR : Stop-Motion : " + e.message
+		pygameEngine.ShowError()

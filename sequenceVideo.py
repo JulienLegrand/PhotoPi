@@ -9,9 +9,9 @@ import livePreview
 import Camera
 
 def RecordVideo():
-	pygameEngine.DrawCenterMessage("3",True)
-	pygameEngine.DrawCenterMessage("2",True)
-	pygameEngine.DrawCenterMessage("1",True)
+	pygameEngine.DrawCenterMessage("3", True)
+	pygameEngine.DrawCenterMessage("2", True)
+	pygameEngine.DrawCenterMessage("1", True)
 	
 	movieFile = "videos/" + dt.datetime.now().strftime("%Y%m%d-%Hh%Mm%S") + ".mpeg"
 	if not os.path.isdir("videos") :
@@ -20,5 +20,9 @@ def RecordVideo():
 	Camera.RecordMovie(movieFile, 20)
 
 def Start():
-	livePreview.Start()
-	RecordVideo()
+	try:
+		livePreview.Start()
+		RecordVideo()
+	except:
+		print "ERREUR : Stop-Motion : " + sys.stderr
+		pygameEngine.ShowError()
