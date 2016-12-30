@@ -20,21 +20,22 @@ def TakePictures():
 	Composite(pic1, pic2, pic3, pic4, photoFile)
 	
 def TakeOnePicture(message, photoFile):
-	pygameEngine.DrawCenterMessage("3", True)
-	pygameEngine.DrawCenterMessage("2", True)
-	pygameEngine.DrawCenterMessage("1", True)
-	pygameEngine.DrawCenterMessage(message, True, False)
-	
-	photoFile = "photos/" + photoFile + ".jpg"
-	if not os.path.isdir("photos") :
-		os.makedirs("photos")
-	
-	Camera.WaitCamera()
-	Camera.TakePhoto(photoFile)
-	
-	sleep(4)
-	return photoFile
-	
+    pygameEngine.DrawCenterMessage("3", True)
+    pygameEngine.DrawCenterMessage("2", True)
+    pygameEngine.DrawCenterMessage("1", True)
+    pygameEngine.DrawCenterMessage(message, True, False)
+
+    photoFile = "photos/" + photoFile + ".jpg"
+    if not os.path.isdir("photos") :
+        os.makedirs("photos")
+
+    Camera.WaitCamera()
+    pygameEngine.Fill(pygameEngine.WHITE_COLOR)
+    Camera.TakePhoto(photoFile)
+
+    sleep(4)
+    return photoFile
+
 def Composite(pic1, pic2, pic3, pic4, photoFile):
 	screen = pygameEngine.GetScreen()
 	
