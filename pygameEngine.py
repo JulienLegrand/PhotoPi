@@ -19,6 +19,7 @@ WHITE_COLOR = pygame.Color(255, 255, 255)
 BLUE_COLOR = pygame.Color(40, 87, 255)
 SCREEN = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
 WAIT_LOGO_FILE = "wait.gif"
+ACTION_SCREEN_FILE = "Action-screen.jpg"
 LOGO_SIZE = 500
 FONT = "DejaVuSerif-Bold"
 
@@ -58,7 +59,7 @@ def DrawCenterMessage(message, big = False, withSleep = True):
 	pygame.display.update()
 	if withSleep:
 		sleep(1)
-    
+
 def DrawTopMessage(message):
 	"""displays notification messages onto the SCREEN"""
 	SCREEN.fill(BLACK_COLOR)
@@ -68,6 +69,11 @@ def DrawTopMessage(message):
 	SCREEN.blit(TextSurf, TextRect)
 	pygame.display.update()
 	
+def ActionScreen():
+    image = pygame.image.load(ACTION_SCREEN_FILE)
+    SCREEN.blit(image, (0,0))
+    pygame.display.update()
+
 def WaitLogo():
 	""" Draw title """
 	# image

@@ -28,8 +28,8 @@ pygameEngine.init(app_name)
 print "Waiting events"
 try:
 	while(1):
-		#Clear screen between sequences
-		pygameEngine.Fill(pygameEngine.BLACK_COLOR)
+		#Default screen between sequences
+		pygameEngine.ActionScreen()
 
 		action = pygameEngine.CheckAction()
 		if(action == 1):
