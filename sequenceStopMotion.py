@@ -26,7 +26,11 @@ def Init():
 	Clear()
 
 def TakePictures():
+    soundBeep1 = pygame.mixer.Sound("beep-01.wav")
+    soundBeep2 = pygame.mixer.Sound("beep-02.wav")
+
     pygameEngine.Fill(pygameEngine.BLACK_COLOR)
+    soundBeep1.play()
     pygameEngine.DrawCenterMessage("Go for %d pics!" % NB_PHOTOS, True, False)
     pygameEngine.DrawCenterMessage("3", True)
     pygameEngine.DrawCenterMessage("2", True)
@@ -36,6 +40,7 @@ def TakePictures():
     i=1
     while(i<=NB_PHOTOS):
         Camera.WaitCamera()
+        soundBeep2.play()
         pygameEngine.DrawCenterMessage("[ Pose " + str(i) + " ]", True)
         photoFilePath = "stopmotion-photos/" + photoFile + "-" + str(i).zfill(2) + ".jpg"
         pygameEngine.Fill(pygameEngine.WHITE_COLOR)
@@ -55,6 +60,10 @@ def TakePictures():
 
 def Composite(photoFile):
     print "Prepare images"
+
+    #Play sound
+    waitSound = pygame.mixer.Sound("Waiting.wav")
+    waitSound.play()
 
     i=1
     while(i<=NB_PHOTOS):

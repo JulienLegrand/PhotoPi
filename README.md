@@ -13,6 +13,7 @@ Software :
 - Python 2.7.9 (Raspbian default)
 - Gphoto2 2.5.10
 - OmxPlayer
+- ImageMagick 6.8.9-9 Q16 arm
 
 Credits :
 Made with code from : (non exhaustive)
@@ -20,3 +21,6 @@ Made with code from : (non exhaustive)
 https://hackaday.io/project/6380-pibooth
 https://github.com/contractorwolf/RaspberryPiPhotobooth/blob/master/photobooth.py
 https://github.com/ErikBorra/lightbooth/blob/master/lightbooth.py
+
+Made with sounds from :
+https://www.soundjay.com
