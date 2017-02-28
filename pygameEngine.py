@@ -36,12 +36,20 @@ def Fill(color):
 	SCREEN.fill(color)
 	pygame.display.update()
 	
-def CheckAction(): #Return -1 or 1 or 2 (Sequence 1 or 2)
+def CheckAction(): #Return -1 (idle) or 1 or 2 (Sequence 1 or 2) or 9 (exit)
+    # get one pygame event
+    event = pygame.event.poll()
+
     # handle physical buttons (connected to GPIO)
-    if (GPIO.input(GPIO_NUMBER_BUTTON_1)):
+    if (event.type == pygame.MOUSEBUTTONUP and event.button == 1) or (event.type == pygame.KEYDOWN and (event.key == pygame.K_1 or event.key == pygame.K_KP1)) or (GPIO.input(GPIO_NUMBER_BUTTON_1)):
     	return 1
-    if (GPIO.input(GPIO_NUMBER_BUTTON_2)):
+    if (event.type == pygame.MOUSEBUTTONUP and event.button == 2) or (event.type == pygame.KEYDOWN and (event.key == pygame.K_2 or event.key == pygame.K_KP2)) or (GPIO.input(GPIO_NUMBER_BUTTON_2)):
         return 2
+
+    # handle keyboard keys
+    if event.type == pygame.KEYDOWN and (event.key == pygame.K_ESCAPE or event.key == pygame.K_q) :
+        return 9
+
     return -1
 
 def ClearActionsQueue():

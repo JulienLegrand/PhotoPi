@@ -39,6 +39,9 @@ try:
 			#sequenceVideo.Start()
 			sequenceStopMotion.Start()
 			pygameEngine.ClearActionsQueue()
+                if(action == 9):
+                        break
+
 except:
 	raise
 finally:
