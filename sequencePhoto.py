@@ -43,6 +43,7 @@ def TakeOnePicture(message, photoFile):
 
 def Composite(pic1, pic2, pic3, pic4, photoFile):
     screen = pygameEngine.GetScreen()
+    dtStart = dt.datetime.now()
 
     #Play sound
     waitSound = pygame.mixer.Sound("Waiting.wav")
@@ -56,6 +57,7 @@ def Composite(pic1, pic2, pic3, pic4, photoFile):
     borderHeight = (pygameEngine.HEIGHT - 2 * imageHeight) / 3
 
     while os.path.exists(pic1) == False: # Wait for creation
+        if dt.datetime.now()-dtStart*24*60 > 1 : raise Exception('No image taken')  # special way out if no image appear
         sleep(.1)
     pbimage1 = pygame.image.load(pic1)
     pbimage1 = pygame.transform.scale(pbimage1, (imageWidth, imageHeight))
