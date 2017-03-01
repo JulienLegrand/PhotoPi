@@ -5,6 +5,7 @@ from core import camera
 from core import sequencePhoto
 from core import sequenceVideo
 from core import sequenceStopMotion
+from core import sequenceSlideshow
 from time import sleep
 from core import pygameEngine
 import os
@@ -38,7 +39,8 @@ try:
 			pygameEngine.ClearActionsQueue()
 		if(action == 2):
 			#sequenceVideo.Start()
-			sequenceStopMotion.Start()
+			#sequenceStopMotion.Start()
+			sequenceSlideshow.Start()
 			pygameEngine.ClearActionsQueue()
                 if(action == 9):
                         break
