@@ -43,7 +43,7 @@ def CheckAction(): #Return -1 (idle) or 1 or 2 (Sequence 1 or 2) or 9 (exit)
     # handle physical buttons (connected to GPIO)
     if (event.type == pygame.MOUSEBUTTONUP and event.button == 1) or (event.type == pygame.KEYDOWN and (event.key == pygame.K_1 or event.key == pygame.K_KP1)) or (GPIO.input(GPIO_NUMBER_BUTTON_1)):
     	return 1
-    if (event.type == pygame.MOUSEBUTTONUP and event.button == 2) or (event.type == pygame.KEYDOWN and (event.key == pygame.K_2 or event.key == pygame.K_KP2)) or (GPIO.input(GPIO_NUMBER_BUTTON_2)):
+    if (event.type == pygame.MOUSEBUTTONUP and event.button == 3) or (event.type == pygame.KEYDOWN and (event.key == pygame.K_2 or event.key == pygame.K_KP2)) or (GPIO.input(GPIO_NUMBER_BUTTON_2)):
         return 2
 
     # handle keyboard keys
