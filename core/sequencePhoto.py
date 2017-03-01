@@ -29,7 +29,8 @@ def TakeOnePicture(message, photoFile):
     pygameEngine.DrawCenterMessage("2", True)
     pygameEngine.DrawCenterMessage("1", True)
     soundBeep2.play()
-    pygameEngine.DrawCenterMessage(message, True, False)
+    pygameEngine.DrawCenterMessage(message, True)
+    sleep(1)
 
     photoFile = config.SEQUENCE_PHOTO_CAPTURES + "/" + photoFile + ".jpg"
     if not os.path.isdir(config.SEQUENCE_PHOTO_CAPTURES) :
@@ -39,7 +40,7 @@ def TakeOnePicture(message, photoFile):
     pygameEngine.Fill(pygameEngine.WHITE_COLOR)
     camera.TakePhoto(photoFile)
 
-    sleep(4)
+    sleep(3)
     return photoFile
 
 def Composite(pic1, pic2, pic3, pic4, photoFile):
