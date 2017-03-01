@@ -18,7 +18,7 @@ FONT = "DejaVuSerif-Bold"
 KEYWORDS_IN_USE = "Camera is already in use"
 KEYWORDS_NO_CAMERA = "*** Error: No camera found. ***"
 KEYWORDS_CAMERA_OK = "Access Capability: Read-Write"
-DEBUG = False # DEBUG variable is here to avoid using DSLR for testing
+DEBUG = True # DEBUG variable is here to avoid using DSLR for testing
 
 # Live preview
 LIVE_PREVIEW_ENABLE = True
@@ -26,6 +26,7 @@ LIVE_MOVIE_FILE = "captures/livepreview-temp/fifo.mjpg"
 PREVIEW_DURATION = 10 # seconds
 
 # Media
+DEBUG_FILE = "media/debug.jpg"
 ACTION_SCREEN_FILE = "media/Action-screen.jpg"
 WAIT_LOGO_FILE = "media/wait.gif"
 WAIT_SOUND_FILE = "media/Waiting.wav"

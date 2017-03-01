@@ -29,7 +29,7 @@ def TakePhoto(photoFile):
 		os.popen("gphoto2 --capture-image-and-download --filename " + photoFile + " --force-overwrite &")
 	else:
 		sleep(3) #Simulate shoot time
-		copyfile("debug.jpg", photoFile)
+		copyfile(config.DEBUG_FILE, photoFile)
 	
 def RecordPreview(liveMovie, previewDuration):
 	if(config.DEBUG):
