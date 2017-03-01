@@ -1,12 +1,12 @@
 # Custom rules
 
-photos/
-composites/
-videos/
-fifo.mjpg
-stopmotion-photos/
+livepreview-temp/
+photo-captures/
+photo-composites/
+stopmotion-captures/
 stopmotion-composites/
 stopmotion-temp/
+videos/
 
 # Created by https://www.gitignore.io/api/python
 

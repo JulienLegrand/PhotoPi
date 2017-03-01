@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 
-import pygameEngine
-import os
+import core
+from core import camera
+from core import sequencePhoto
+from core import sequenceVideo
+from core import sequenceStopMotion
 from time import sleep
-import sequencePhoto
-import sequenceVideo
-import sequenceStopMotion
-import Camera
+from core import pygameEngine
+import os
 
 # drops other possible connections to the camera on every restart just to be safe
 os.system("sudo pkill gvfs")
@@ -18,7 +19,7 @@ print app_name + " started"
 sleep(2)
 
 #Self test
-if(Camera.CheckCamera() == -1):
+if(camera.CheckCamera() == -1):
 	raise Exception('No camera detected!')
 
 #Start
