@@ -12,10 +12,9 @@ def CheckCamera():
 	#Test Camera status by reading Gphoto2 summary : -1 No camera / 0 in use / 1 ok
 	p = sub.Popen('gphoto2 --summary', stdout=sub.PIPE, stderr=sub.PIPE, shell=True)
 	summary = str(p.communicate())
-	if(summary.find(config.KEYWORDS_NO_CAMERA) != -1): res = -1
-	if(summary.find(config.KEYWORDS_IN_USE) != -1): res = 0
-	if(summary.find(config.KEYWORDS_CAMERA_OK) != -1): res = 1
-	return res
+	if(summary.find(config.KEYWORDS_NO_CAMERA) != -1): return -1
+	if(summary.find(config.KEYWORDS_IN_USE) != -1): return 0
+	if(summary.find(config.KEYWORDS_CAMERA_OK) != -1): return 1
 
 def WaitCamera():
 	if(config.DEBUG):
