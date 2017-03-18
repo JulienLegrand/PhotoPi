@@ -71,9 +71,10 @@ def DrawTopMessage(message):
 	pygame.display.update()
 	
 def ActionScreen():
-    image = pygame.image.load(config.ACTION_SCREEN_FILE)
-    SCREEN.blit(image, (0,0))
-    pygame.display.update()
+	image = pygame.image.load(config.ACTION_SCREEN_FILE)
+	SCREEN.blit(image, (0,0))
+	pygame.display.update()
+	sleep(.6)
 
 def WaitLogo():
 	""" Draw title """

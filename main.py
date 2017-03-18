@@ -29,18 +29,22 @@ pygameEngine.init(app_name)
 # Boucle principale
 print "Waiting events"
 try:
-	while(1):
-		#Default screen between sequences
-		pygameEngine.ActionScreen()
+	#Default screen between sequences
+	pygameEngine.ActionScreen()
+	while True:
 
 		action = pygameEngine.CheckAction()
 		if(action == 1):
 			sequencePhoto.Start()
+			#Default screen between sequences
+			pygameEngine.ActionScreen()
 			pygameEngine.ClearActionsQueue()
 		if(action == 2):
 			#sequenceVideo.Start()
 			#sequenceStopMotion.Start()
 			sequenceSlideshow.Start()
+			#Default screen between sequences
+			pygameEngine.ActionScreen()
 			pygameEngine.ClearActionsQueue()
                 if(action == 9):
                         break
