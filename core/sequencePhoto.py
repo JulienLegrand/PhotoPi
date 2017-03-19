@@ -25,7 +25,7 @@ def TakeOnePicture(message, photoFile):
 	pygameEngine.DrawCenterMessage("2", True)
 	pygameEngine.DrawCenterMessage("1", True)
 	pygameEngine.DrawCenterMessage(message, True)
-	pygameEngine.Bip1()
+	pygameEngine.SoundBip2()
 	sleep(1)
 
 	photoFile = config.SEQUENCE_PHOTO_CAPTURES + "/" + photoFile + ".jpg"
@@ -44,8 +44,7 @@ def Composite(pic1, pic2, pic3, pic4, photoFile):
     dtStart = dt.datetime.now()
 
     #Play sound
-    waitSound = pygame.mixer.Sound(config.WAIT_SOUND_FILE)
-    waitSound.play()
+    pygameEngine.SoundWait()
 
     #Create composite image 
     pygameEngine.WaitLogo()

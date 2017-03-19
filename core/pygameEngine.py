@@ -91,13 +91,17 @@ def WaitLogo():
 	SCREEN.blit(image_surface, image_Rect)
 	pygame.display.update()
 
-def Bip1():
+def SoundBip1():
 	soundBeep1 = pygame.mixer.Sound(config.BEEP01_SOUND_FILE)
 	soundBeep1.play()
 
-def Bip2():
+def SoundBip2():
 	soundBeep2 = pygame.mixer.Sound(config.BEEP02_SOUND_FILE)
 	soundBeep2.play()
+
+def SoundWait():
+	waitSound = pygame.mixer.Sound(config.WAIT_SOUND_FILE)
+	waitSound.play()
 	
 def ShowError():
 	SCREEN.fill(BLUE_COLOR)

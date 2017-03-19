@@ -35,14 +35,14 @@ try:
 
 		action = pygameEngine.CheckAction()
 		if(action == 1):
-			pygameEngine.Bip2()
+			pygameEngine.SoundBip1()
 			sequencePhoto.Start()
 			
 			#Default screen between sequences
 			pygameEngine.ActionScreen()
 			pygameEngine.ClearActionsQueue()
 		if(action == 2):
-			pygameEngine.Bip2()
+			pygameEngine.SoundBip1()
 			#sequenceVideo.Start()
 			#sequenceStopMotion.Start()
 			sequenceSlideshow.Start()
