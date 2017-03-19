@@ -21,14 +21,10 @@ def TakePictures():
 	Composite(pic1, pic2, pic3, pic4, photoFile)
 	
 def TakeOnePicture(message, photoFile):
-    soundBeep1 = pygame.mixer.Sound(config.BEEP01_SOUND_FILE)
-    soundBeep2 = pygame.mixer.Sound(config.BEEP02_SOUND_FILE)
-
-    soundBeep1.play()
     pygameEngine.DrawCenterMessage("3", True)
     pygameEngine.DrawCenterMessage("2", True)
     pygameEngine.DrawCenterMessage("1", True)
-    soundBeep2.play()
+    pygameEngine.Bip1()
     pygameEngine.DrawCenterMessage(message, True)
     sleep(1)
 
