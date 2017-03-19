@@ -41,5 +41,11 @@ SEQUENCE_STOPMOTION_COMPOSITES = "captures/stopmotion-composites"
 SEQUENCE_STOPMOTION_TEMP = "captures/stopmotion-temp"
 SEQUENCE_VIDEO_CAPTURES = "captures/videos"
 
+# Sequence Photo
+SEQUENCE_PHOTO_MSG1 = "Smile :)"
+SEQUENCE_PHOTO_MSG2 = "~ Party ~"
+SEQUENCE_PHOTO_MSG3 = ".: More fun :."
+SEQUENCE_PHOTO_MSG4 = "The last one :D"
+
 # Sequence Stop-Motion
 SEQUENCE_STOPMOTION_NB_PHOTOS = 5

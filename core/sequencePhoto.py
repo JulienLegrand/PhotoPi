@@ -14,30 +14,30 @@ import sys
 def TakePictures():
 	#Attribute a name with current time for all photos and composite
 	photoFile = dt.datetime.now().strftime("%Y%m%d-%Hh%Mm%S")
-	pic1 = TakeOnePicture("Smile :)", photoFile + "-1")
-	pic2 = TakeOnePicture("~ Party ~", photoFile + "-2")
-	pic3 = TakeOnePicture(".: More fun :.", photoFile + "-3")
-	pic4 = TakeOnePicture("The last one :D", photoFile + "-4")
+	pic1 = TakeOnePicture(config.SEQUENCE_PHOTO_MSG1, photoFile + "-1")
+	pic2 = TakeOnePicture(config.SEQUENCE_PHOTO_MSG2, photoFile + "-2")
+	pic3 = TakeOnePicture(config.SEQUENCE_PHOTO_MSG3, photoFile + "-3")
+	pic4 = TakeOnePicture(config.SEQUENCE_PHOTO_MSG4, photoFile + "-4")
 	Composite(pic1, pic2, pic3, pic4, photoFile)
 	
 def TakeOnePicture(message, photoFile):
-    pygameEngine.DrawCenterMessage("3", True)
-    pygameEngine.DrawCenterMessage("2", True)
-    pygameEngine.DrawCenterMessage("1", True)
-    pygameEngine.Bip1()
-    pygameEngine.DrawCenterMessage(message, True)
-    sleep(1)
+	pygameEngine.DrawCenterMessage("3", True)
+	pygameEngine.DrawCenterMessage("2", True)
+	pygameEngine.DrawCenterMessage("1", True)
+	pygameEngine.DrawCenterMessage(message, True)
+	pygameEngine.Bip1()
+	sleep(1)
 
-    photoFile = config.SEQUENCE_PHOTO_CAPTURES + "/" + photoFile + ".jpg"
-    if not os.path.isdir(config.SEQUENCE_PHOTO_CAPTURES) :
-        os.makedirs(config.SEQUENCE_PHOTO_CAPTURES)
+	photoFile = config.SEQUENCE_PHOTO_CAPTURES + "/" + photoFile + ".jpg"
+	if not os.path.isdir(config.SEQUENCE_PHOTO_CAPTURES) :
+		os.makedirs(config.SEQUENCE_PHOTO_CAPTURES)
 
-    camera.WaitCamera()
-    pygameEngine.Fill(pygameEngine.WHITE_COLOR)
-    camera.TakePhoto(photoFile)
+	camera.WaitCamera()
+	pygameEngine.Fill(pygameEngine.WHITE_COLOR)
+	camera.TakePhoto(photoFile)
 
-    sleep(3)
-    return photoFile
+	sleep(3)
+	return photoFile
 
 def Composite(pic1, pic2, pic3, pic4, photoFile):
     screen = pygameEngine.GetScreen()
