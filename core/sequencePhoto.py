@@ -24,8 +24,8 @@ def TakeOnePicture(message, photoFile):
 	pygameEngine.DrawCenterMessage("3", True)
 	pygameEngine.DrawCenterMessage("2", True)
 	pygameEngine.DrawCenterMessage("1", True)
-	pygameEngine.DrawCenterMessage(message, True)
 	pygameEngine.SoundBip2()
+	pygameEngine.DrawCenterMessage(message, True)
 	sleep(1)
 
 	photoFile = config.SEQUENCE_PHOTO_CAPTURES + "/" + photoFile + ".jpg"
@@ -60,17 +60,20 @@ def Composite(pic1, pic2, pic3, pic4, photoFile):
     pbimage1 = pygame.transform.scale(pbimage1, (imageWidth, imageHeight))
 
     while os.path.exists(pic2) == False: # Wait for creation
-        sleep(.1)
+		if dt.datetime.now() - dtStart * 24 * 60 > 1 : raise Exception('No image taken')  # special way out if no image appears
+		sleep(.1)
     pbimage2 = pygame.image.load(pic2)
     pbimage2 = pygame.transform.scale(pbimage2, (imageWidth, imageHeight))
 
     while os.path.exists(pic3) == False: # Wait for creation
-        sleep(.1)
+		if dt.datetime.now() - dtStart * 24 * 60 > 1 : raise Exception('No image taken')  # special way out if no image appears
+		sleep(.1)
     pbimage3 = pygame.image.load(pic3)
     pbimage3 = pygame.transform.scale(pbimage3, (imageWidth, imageHeight))
 
     while os.path.exists(pic4) == False: # Wait for creation
-        sleep(.1)
+		if dt.datetime.now() - dtStart * 24 * 60 > 1 : raise Exception('No image taken')  # special way out if no image appears
+		sleep(.1)
     pbimage4 = pygame.image.load(pic4)
     pbimage4 = pygame.transform.scale(pbimage4, (imageWidth, imageHeight))
 
