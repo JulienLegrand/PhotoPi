@@ -28,7 +28,7 @@ def PlayVideo(movieFile):
 	print "Play video"
 	while not os.path.exists(movieFile):
 		sleep(.1)
-	os.popen("omxplayer " + movieFile)
+	os.popen(config.CMD_VIDEO_PLAY.format(filename = movieFile))
 
 def Start():
 	try:

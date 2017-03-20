@@ -12,7 +12,7 @@ def Start():
         return
 
     # Start recording live preview
-    pygameEngine.DrawCenterMessage("Prepare for fun", True)
+    pygameEngine.DrawCenterMessage(config.LIVE_PREVIEW_MSG, True)
     print "Start recording live preview"
     if os.path.exists(config.LIVE_MOVIE_FILE):
         os.remove(config.LIVE_MOVIE_FILE)
@@ -26,4 +26,4 @@ def Start():
     # Playing live preview
     pygameEngine.DrawCenterMessage("") #Clean screen before preview
     print "Playing live preview"
-    os.popen("omxplayer " + config.LIVE_MOVIE_FILE + " --live")
+    os.popen(config.CMD_LIVE_PREVIEW_PLAY.format(filename = config.LIVE_MOVIE_FILE))

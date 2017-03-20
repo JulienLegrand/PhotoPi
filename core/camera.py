@@ -10,7 +10,7 @@ def CheckCamera():
 	if(config.DEBUG):
 		return 1
 	#Test Camera status by reading Gphoto2 summary : -1 No camera / 0 in use / 1 ok
-	p = sub.Popen('gphoto2 --summary', stdout=sub.PIPE, stderr=sub.PIPE, shell=True)
+	p = sub.Popen(config.CMD_CHECK, stdout=sub.PIPE, stderr=sub.PIPE, shell=True)
 	summary = str(p.communicate())
 	if(summary.find(config.KEYWORDS_NO_CAMERA) != -1): return -1
 	if(summary.find(config.KEYWORDS_IN_USE) != -1): return 0
@@ -25,7 +25,7 @@ def WaitCamera():
 		
 def TakePhoto(photoFile):
 	if(not config.DEBUG):
-		os.popen("gphoto2 --capture-image-and-download --filename " + photoFile + " --force-overwrite &")
+		os.popen(config.CMD_PHOTO.format(filename = photoFile))
 	else:
 		sleep(3) #Simulate shoot time
 		copyfile(config.DEBUG_FILE, photoFile)
@@ -33,9 +33,9 @@ def TakePhoto(photoFile):
 def RecordPreview(liveMovie, previewDuration):
 	if(config.DEBUG):
 		return
-	os.popen("gphoto2 --capture-movie=" + str(previewDuration) + "s --stdout> " + liveMovie + " &")
+	os.popen(config.CMD_MOVIE.format(filename = liveMovie, duration = str(previewDuration)) + " &")
 		
 def RecordMovie(movieFile, previewDuration):
 	if(config.DEBUG):
 		return
-	os.popen("gphoto2 --capture-movie=" + str(previewDuration) + "s --stdout> " + movieFile)
+	os.popen(config.CMD_MOVIE.format(filename = movieFile, duration = str(previewDuration)))

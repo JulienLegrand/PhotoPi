@@ -24,11 +24,7 @@ def Init():
 	Clear()
 
 def TakePictures():
-    soundBeep1 = pygame.mixer.Sound(config.BEEP01_SOUND_FILE)
-    soundBeep2 = pygame.mixer.Sound(config.BEEP02_SOUND_FILE)
-
     pygameEngine.Fill(pygameEngine.BLACK_COLOR)
-    soundBeep1.play()
     pygameEngine.DrawCenterMessage("Go for %d pics!" % config.SEQUENCE_STOPMOTION_NB_PHOTOS, True, False)
     pygameEngine.DrawCenterMessage("3", True)
     pygameEngine.DrawCenterMessage("2", True)
@@ -38,7 +34,7 @@ def TakePictures():
     i=1
     while(i <= config.SEQUENCE_STOPMOTION_NB_PHOTOS):
         camera.WaitCamera()
-        soundBeep2.play()
+        pygameEngine.SoundBip2()
         pygameEngine.DrawCenterMessage("[ Pose " + str(i) + " ]", True)
         photoFilePath = config.SEQUENCE_STOPMOTION_CAPTURES + "/" + photoFile + "-" + str(i).zfill(2) + ".jpg"
         pygameEngine.Fill(pygameEngine.WHITE_COLOR)
@@ -49,7 +45,7 @@ def TakePictures():
         while os.path.exists(photoFilePath) == False: # Wait for creation
             sleep(.1)
         copyfile(photoFilePath, photoFilePathDest)
-        p = sub.Popen('mogrify -resize 1920x1080 ' + photoFilePathDest, stdout=sub.PIPE, stderr=sub.PIPE, shell=True)
+        p = sub.Popen(config.CMD_SHRINK.format(filename = photoFilePathDest), stdout=sub.PIPE, stderr=sub.PIPE, shell=True)
 
         i+=1
     pygameEngine.WaitLogo()
@@ -69,7 +65,7 @@ def Composite(photoFile):
 
         #Create additionnal images with imagemagick morph
         if(i>1):
-            p = sub.Popen("sudo convert " + config.SEQUENCE_STOPMOTION_TEMP + "/" + photoFile + "-" + str(i-1).zfill(2) + ".jpg " + config.SEQUENCE_STOPMOTION_TEMP + "/" + photoFile + "-" + str(i).zfill(2) + ".jpg -delay 100 -morph 10 " + config.SEQUENCE_STOPMOTION_TEMP + "/" + photoFile + "-" + str(i-1).zfill(2) + "-99-%03d.jpg", stdout=sub.PIPE, stderr=sub.PIPE, shell=True)
+            p = sub.Popen(config.CMD_ADD_MORPH_FRAMES.format(filename1 = config.SEQUENCE_STOPMOTION_TEMP + "/" + photoFile + "-" + str(i-1).zfill(2) + ".jpg", filename2 = config.SEQUENCE_STOPMOTION_TEMP + "/" + photoFile + "-" + str(i).zfill(2) + ".jpg", filenamePattern = config.SEQUENCE_STOPMOTION_TEMP + "/" + photoFile + "-" + str(i-1).zfill(2) + "-99-%03d.jpg"), stdout=sub.PIPE, stderr=sub.PIPE, shell=True)
             p.wait()
 
         #Duplicate the photo for the final video
@@ -90,18 +86,18 @@ def Composite(photoFile):
 
     print "Encode video"
     #os.popen don't work for this, don't know why
-    p = sub.Popen("sudo mencoder mf://" + config.SEQUENCE_STOPMOTION_TEMP + "/*.jpg -mf w=1920:h=1080:fps=20:type=jpg -nosound -ovc x264 -x264encopts bitrate=2000 -o " + config.SEQUENCE_STOPMOTION_TEMP + "/" + photoFile + ".mp4", stdout=sub.PIPE, stderr=sub.PIPE, shell=True)
+    p = sub.Popen(config.CMD_ENCODE.format(image_folder = config.SEQUENCE_STOPMOTION_TEMP, filename = config.SEQUENCE_STOPMOTION_TEMP + "/" + photoFile + ".mp4"), stdout=sub.PIPE, stderr=sub.PIPE, shell=True)
     p.wait()
 
     print "Add music"
     #Add music
-    p = sub.Popen("sudo avconv -i " + config.SEQUENCE_STOPMOTION_TEMP + "/" + photoFile + ".mp4 -i music.mp3 -c copy -map 0:v -map 1:a -shortest " + config.SEQUENCE_STOPMOTION_COMPOSITES + "/" + photoFile + ".mp4 -y", stdout=sub.PIPE, stderr=sub.PIPE, shell=True)
+    p = sub.Popen(config.CMD_ADD_MUSIC.format(filename_in = config.SEQUENCE_STOPMOTION_TEMP + "/" + photoFile + ".mp4", filename_music = config.MUSIC_FILE, filename_out = config.SEQUENCE_STOPMOTION_COMPOSITES + "/" + photoFile + ".mp4"), stdout=sub.PIPE, stderr=sub.PIPE, shell=True)
     p.wait()
 
     print "Play"
     #Play
     pygameEngine.Fill(pygameEngine.BLACK_COLOR)
-    os.popen("omxplayer " + config.SEQUENCE_STOPMOTION_COMPOSITES + "/" + photoFile + ".mp4 -o local --vol -4000")
+    os.popen(config.CMD_STOPMOTION_PLAY.format(filename = config.SEQUENCE_STOPMOTION_COMPOSITES + "/" + photoFile + ".mp4"))
 
 def Clear():
 	#Clear temp folder
