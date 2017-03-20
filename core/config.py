@@ -1,10 +1,8 @@
 #!/usr/bin/env python
 
-import pygame
-
 # GPIO Setup (optional)
-GPIO_NUMBER_BUTTON_1 = 36
-GPIO_NUMBER_BUTTON_2 = 32
+GPIO_NUMBER_BUTTON_1 = 32
+GPIO_NUMBER_BUTTON_2 = 36
 
 # PygameEngine
 WIDTH = 1280
