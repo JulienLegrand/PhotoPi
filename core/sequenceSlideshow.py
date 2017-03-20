@@ -26,12 +26,12 @@ def ShowPhoto(photoFile):
 
 		# handle events
 		# Button 1 = Quit
-		if (event.type == pygame.MOUSEBUTTONUP and event.button == 1) or (event.type == pygame.KEYDOWN and (event.key == pygame.K_1 or event.key == pygame.K_KP1)) or (GPIO.input(config.GPIO_NUMBER_BUTTON_1)):
+		if (event.type == pygame.MOUSEBUTTONUP and event.button == 1) or (event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE) or GPIO.input(config.GPIO_NUMBER_BUTTON_1):
 			return -1
-		# Button 1 = Cycle
-		if (event.type == pygame.MOUSEBUTTONUP and event.button == 3) or (event.type == pygame.KEYDOWN and (event.key == pygame.K_s or event.key == pygame.K_KP2)) or (GPIO.input(config.GPIO_NUMBER_BUTTON_2)):
+		# Button 2 = Cycle old photos
+		if (event.type == pygame.MOUSEBUTTONUP and event.button == 3) or (event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN) or GPIO.input(config.GPIO_NUMBER_BUTTON_2):
 			return 1
-		# Button 1 = Quit keys
+		# Button Esc or Q = Quit keys
 		if event.type == pygame.KEYDOWN and (event.key == pygame.K_ESCAPE or event.key == pygame.K_q) :
 			return -1
 
