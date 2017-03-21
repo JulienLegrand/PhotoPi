@@ -50,6 +50,10 @@ SEQUENCE_PHOTO_MSG2 = "~ Party ~"
 SEQUENCE_PHOTO_MSG3 = ".: More fun :."
 SEQUENCE_PHOTO_MSG4 = "The last one :D"
 
+# Sequence Slideshow
+QUIT_BTON_MSG = "Quit"
+PREC_BTON_MSG = "Prev."
+
 # Sequence Stop-Motion
 SEQUENCE_STOPMOTION_NB_PHOTOS = 5
 MUSIC_FILE = "media/music.mp3"

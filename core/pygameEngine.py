@@ -14,6 +14,7 @@ GPIO.setup(config.GPIO_NUMBER_BUTTON_2, GPIO.IN)
 BLACK_COLOR = pygame.Color(0, 0, 0)
 WHITE_COLOR = pygame.Color(255, 255, 255)
 BLUE_COLOR = pygame.Color(40, 87, 255)
+YELLOW_COLOR = pygame.Color(255, 192, 68)
 SCREEN = pygame.display.set_mode((config.WIDTH, config.HEIGHT), pygame.FULLSCREEN)
 
 def init(app_name):
@@ -68,6 +69,23 @@ def DrawTopMessage(message):
 	TextRect = TextSurf.get_rect()
 	TextRect.center = ((config.WIDTH / 2), (80))
 	SCREEN.blit(TextSurf, TextRect)
+	pygame.display.update()
+	
+def ShowNavButtons():
+	# Quit
+	pygame.draw.circle(SCREEN, BLUE_COLOR, (1080,960), 50, 0)
+	TextSurf = pygame.font.SysFont(config.FONT, 40).render(config.QUIT_BTON_MSG, True, WHITE_COLOR)
+	TextRect = TextSurf.get_rect()
+	TextRect.center = (1080,960)
+	SCREEN.blit(TextSurf, TextRect)
+	
+	# Cycle
+	pygame.draw.circle(SCREEN, YELLOW_COLOR, (1200,960), 50, 0)
+	TextSurf = pygame.font.SysFont(config.FONT, 40).render(config.PREC_BTON_MSG, True, WHITE_COLOR)
+	TextRect = TextSurf.get_rect()
+	TextRect.center = (1200,960)
+	SCREEN.blit(TextSurf, TextRect)
+	
 	pygame.display.update()
 	
 def ActionScreen():

@@ -17,7 +17,8 @@ def ShowPhoto(photoFile):
 	image = pygame.image.load(photoFile)
 	screen.blit(image, (0,0))
 	pygame.display.update()
-	sleep(.6)
+	sleep(1)
+	pygameEngine.ShowNavButtons()
 
 	i = 0
 	while True:
@@ -34,7 +35,7 @@ def ShowPhoto(photoFile):
 		# Button Esc or Q = Quit keys
 		if event.type == pygame.KEYDOWN and (event.key == pygame.K_ESCAPE or event.key == pygame.K_q) :
 			return -1
-
+			
 def CyclePhoto():
 	filelist = [ f for f in os.listdir(config.SEQUENCE_PHOTO_COMPOSITES) ]
 	filelist.sort()
