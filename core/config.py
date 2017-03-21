@@ -61,3 +61,13 @@ CMD_STOPMOTION_PLAY = "omxplayer {filename} -o local --vol -4000"
 
 # Sequence Video
 CMD_VIDEO_PLAY = "omxplayer {filename}"
+
+# Mail
+MAIL = True
+MAIL_FROM = "foo_foo@foo.com"
+MAIL_TO = ["foo_love@foo.com"]
+MAIL_SUBJECT = "PhotoPI"
+MAIL_TEXT = ""
+MAIL_SMTP = "smtp.foo.com"
+MAIL_SMTP_USER = "foo"
+MAIL_SMTP_PWD = "secret_foo"
