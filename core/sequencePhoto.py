@@ -42,7 +42,6 @@ def TakeOnePicture(message, photoFile):
 
 def Composite(pic1, pic2, pic3, pic4, photoFile):
 	screen = pygameEngine.GetScreen()
-	dtStart = dt.datetime.now()
 
 	#Play sound
 	pygameEngine.SoundWait()
@@ -54,26 +53,30 @@ def Composite(pic1, pic2, pic3, pic4, photoFile):
 	imageHeight = imageWidth * 2/3 #only work in landscape mode with 3/2 ratio
 	borderHeight = (config.HEIGHT - 2 * imageHeight) / 3
 
+	dtStart = dt.datetime.now()
 	while os.path.exists(pic1) == False: # Wait for creation
-		if dt.datetime.now() - dtStart * 24 * 60 > 1 : raise Exception('No image taken')  # special way out if no image appears
+		if (dt.datetime.now() - dtStart).seconds / 60 > 1 : raise Exception('No image taken')  # special way out if no image appears
 		sleep(.1)
 	pbimage1 = pygame.image.load(pic1)
 	pbimage1 = pygame.transform.scale(pbimage1, (imageWidth, imageHeight))
 
+	dtStart = dt.datetime.now()
 	while os.path.exists(pic2) == False: # Wait for creation
-		if dt.datetime.now() - dtStart * 24 * 60 > 1 : raise Exception('No image taken')  # special way out if no image appears
+		if (dt.datetime.now() - dtStart).seconds / 60 > 1 : raise Exception('No image taken')  # special way out if no image appears
 		sleep(.1)
 	pbimage2 = pygame.image.load(pic2)
 	pbimage2 = pygame.transform.scale(pbimage2, (imageWidth, imageHeight))
 
+	dtStart = dt.datetime.now()
 	while os.path.exists(pic3) == False: # Wait for creation
-		if dt.datetime.now() - dtStart * 24 * 60 > 1 : raise Exception('No image taken')  # special way out if no image appears
+		if (dt.datetime.now() - dtStart).seconds / 60 > 1 : raise Exception('No image taken')  # special way out if no image appears
 		sleep(.1)
 	pbimage3 = pygame.image.load(pic3)
 	pbimage3 = pygame.transform.scale(pbimage3, (imageWidth, imageHeight))
 
+	dtStart = dt.datetime.now()
 	while os.path.exists(pic4) == False: # Wait for creation
-		if dt.datetime.now() - dtStart * 24 * 60 > 1 : raise Exception('No image taken')  # special way out if no image appears
+		if (dt.datetime.now() - dtStart).seconds / 60 > 1 : raise Exception('No image taken')  # special way out if no image appears
 		sleep(.1)
 	pbimage4 = pygame.image.load(pic4)
 	pbimage4 = pygame.transform.scale(pbimage4, (imageWidth, imageHeight))
