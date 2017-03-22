@@ -35,6 +35,7 @@ WAIT_LOGO_FILE = "media/wait.gif"
 WAIT_SOUND_FILE = "media/Waiting.wav"
 BEEP01_SOUND_FILE = "media/beep-01.wav"
 BEEP02_SOUND_FILE = "media/beep-02.wav"
+BEEP03_SOUND_FILE = "media/beep-03.wav"
 
 # Capture folders
 SEQUENCE_PHOTO_CAPTURES = "captures/photo-captures"

@@ -42,6 +42,7 @@ def CyclePhoto():
 	filelist.sort()
 	for f in reversed(filelist):
 		res = ShowPhoto(config.SEQUENCE_PHOTO_COMPOSITES + "/" + f)
+		pygameEngine.SoundBip3()
 		if res == -1 : break
 
 def Start():

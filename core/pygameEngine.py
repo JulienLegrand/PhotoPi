@@ -110,12 +110,16 @@ def WaitLogo():
 	pygame.display.update()
 
 def SoundBip1():
-	soundBeep1 = pygame.mixer.Sound(config.BEEP01_SOUND_FILE)
-	soundBeep1.play()
+	soundBeep = pygame.mixer.Sound(config.BEEP01_SOUND_FILE)
+	soundBeep.play()
 
 def SoundBip2():
-	soundBeep2 = pygame.mixer.Sound(config.BEEP02_SOUND_FILE)
-	soundBeep2.play()
+	soundBeep = pygame.mixer.Sound(config.BEEP02_SOUND_FILE)
+	soundBeep.play()
+	
+def SoundBip3():
+	soundBeep = pygame.mixer.Sound(config.BEEP03_SOUND_FILE)
+	soundBeep.play()
 
 def SoundWait():
 	waitSound = pygame.mixer.Sound(config.WAIT_SOUND_FILE)

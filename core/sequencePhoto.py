@@ -124,6 +124,7 @@ def Start():
 		livePreview.Start()
 		compositePhoto = TakePictures()
 		SendMail(compositePhoto)
+		pygameEngine.SoundBip3()
 	except Exception, e:
 		print "ERREUR : Photo : " + str(sys.exc_info()[0]) + " : " + str(e)
 		pygameEngine.ShowError()
