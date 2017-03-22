@@ -14,7 +14,8 @@ import RPi.GPIO as GPIO
 
 def ShowPhoto(photoFile):
 	screen = pygameEngine.GetScreen()
-	image = pygame.image.load(photoFile)
+	image = pygame.image.load(photoFile).convert()
+	image = pygame.transform.scale(image, (config.WIDTH,config.HEIGHT))
 	screen.blit(image, (0,0))
 	pygame.display.update()
 	sleep(1)

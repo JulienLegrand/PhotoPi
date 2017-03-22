@@ -40,6 +40,13 @@ def TakeOnePicture(message, photoFile):
 	sleep(3)
 	return photoFile
 
+def photoLoad(file):
+	dtStart = dt.datetime.now()
+	while os.path.exists(file) == False: # Wait for creation
+		if (dt.datetime.now() - dtStart).seconds / 60 > 1 : raise Exception('No image taken')  # special way out if no image appears
+		sleep(.1)
+	return pygame.image.load(file).convert()
+	
 def Composite(pic1, pic2, pic3, pic4, photoFile):
 	screen = pygameEngine.GetScreen()
 
@@ -53,34 +60,17 @@ def Composite(pic1, pic2, pic3, pic4, photoFile):
 	imageHeight = imageWidth * 2/3 #only work in landscape mode with 3/2 ratio
 	borderHeight = (config.HEIGHT - 2 * imageHeight) / 3
 
-	dtStart = dt.datetime.now()
-	while os.path.exists(pic1) == False: # Wait for creation
-		if (dt.datetime.now() - dtStart).seconds / 60 > 1 : raise Exception('No image taken')  # special way out if no image appears
-		sleep(.1)
-	pbimage1 = pygame.image.load(pic1)
-	pbimage1 = pygame.transform.scale(pbimage1, (imageWidth, imageHeight))
+	#Photos loading
+	pbimage1Raw = photoLoad(pic1)
+	pbimage1 = pygame.transform.scale(pbimage1Raw, (imageWidth, imageHeight))
+	pbimage2Raw = photoLoad(pic2)
+	pbimage2 = pygame.transform.scale(pbimage2Raw, (imageWidth, imageHeight))
+	pbimage3Raw = photoLoad(pic3)
+	pbimage3 = pygame.transform.scale(pbimage3Raw, (imageWidth, imageHeight))
+	pbimage4Raw = photoLoad(pic4)
+	pbimage4 = pygame.transform.scale(pbimage4Raw, (imageWidth, imageHeight))
 
-	dtStart = dt.datetime.now()
-	while os.path.exists(pic2) == False: # Wait for creation
-		if (dt.datetime.now() - dtStart).seconds / 60 > 1 : raise Exception('No image taken')  # special way out if no image appears
-		sleep(.1)
-	pbimage2 = pygame.image.load(pic2)
-	pbimage2 = pygame.transform.scale(pbimage2, (imageWidth, imageHeight))
-
-	dtStart = dt.datetime.now()
-	while os.path.exists(pic3) == False: # Wait for creation
-		if (dt.datetime.now() - dtStart).seconds / 60 > 1 : raise Exception('No image taken')  # special way out if no image appears
-		sleep(.1)
-	pbimage3 = pygame.image.load(pic3)
-	pbimage3 = pygame.transform.scale(pbimage3, (imageWidth, imageHeight))
-
-	dtStart = dt.datetime.now()
-	while os.path.exists(pic4) == False: # Wait for creation
-		if (dt.datetime.now() - dtStart).seconds / 60 > 1 : raise Exception('No image taken')  # special way out if no image appears
-		sleep(.1)
-	pbimage4 = pygame.image.load(pic4)
-	pbimage4 = pygame.transform.scale(pbimage4, (imageWidth, imageHeight))
-
+	#Fade in
 	i = 50
 	while(i<=255):
 		screen.fill(pygameEngine.WHITE_COLOR)
@@ -96,12 +86,30 @@ def Composite(pic1, pic2, pic3, pic4, photoFile):
 		#pygame.time.delay(5) #To slow down animation
 		i += 5 #To speed up animation
 
+	#Composition only for saving photo file
+	ratio = 3
+	photoSurface = pygame.Surface((config.WIDTH * ratio, config.HEIGHT * ratio))
+	photoSurface.fill(pygameEngine.WHITE_COLOR)
+	imageWidth = imageWidth * ratio
+	imageHeight = imageHeight * ratio
+	borderWidth = borderWidth * ratio
+	borderHeight = borderHeight * ratio
+	pbimage1 = pygame.transform.scale(pbimage1Raw, (imageWidth, imageHeight))
+	pbimage2 = pygame.transform.scale(pbimage2Raw, (imageWidth, imageHeight))
+	pbimage3 = pygame.transform.scale(pbimage3Raw, (imageWidth, imageHeight))
+	pbimage4 = pygame.transform.scale(pbimage4Raw, (imageWidth, imageHeight))
+	photoSurface.blit(pbimage1, (borderWidth, borderHeight))
+	photoSurface.blit(pbimage2, (2 * borderWidth + imageWidth, borderHeight))
+	photoSurface.blit(pbimage3, (borderWidth, 2 * borderHeight + imageHeight))
+	photoSurface.blit(pbimage4, (2 * borderWidth + imageWidth, 2 * borderHeight + imageHeight))
+		
+	#Save
 	if not os.path.isdir(config.SEQUENCE_PHOTO_COMPOSITES) :
 		os.makedirs(config.SEQUENCE_PHOTO_COMPOSITES)
 
 	compositePhoto = config.SEQUENCE_PHOTO_COMPOSITES + "/" + photoFile + ".jpg"
-	pygame.image.save(screen, compositePhoto)
-	sleep(10)
+	pygame.image.save(photoSurface, compositePhoto)
+	sleep(6)
 	return compositePhoto
 
 def SendMail(compositePhoto):
