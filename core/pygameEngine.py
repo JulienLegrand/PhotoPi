@@ -16,6 +16,12 @@ WHITE_COLOR = pygame.Color(255, 255, 255)
 BLUE_COLOR = pygame.Color(40, 87, 255)
 YELLOW_COLOR = pygame.Color(255, 192, 68)
 SCREEN = pygame.display.set_mode((config.WIDTH, config.HEIGHT), pygame.FULLSCREEN)
+ACTION_SCREEN_SET = {
+	1 : config.ACTION_SCREEN_FILE1,
+	2 : config.ACTION_SCREEN_FILE2,
+	3 : config.ACTION_SCREEN_FILE3,
+	4 : config.ACTION_SCREEN_FILE4
+	}
 
 def init(app_name):
 	print "pygame init"
@@ -88,8 +94,8 @@ def ShowNavButtons():
 	
 	pygame.display.update()
 	
-def ActionScreen():
-	image = pygame.image.load(config.ACTION_SCREEN_FILE)
+def ActionScreen(number):
+	image = pygame.image.load(ACTION_SCREEN_SET[number])
 	SCREEN.blit(image, (0,0))
 	pygame.display.update()
 	sleep(.6)

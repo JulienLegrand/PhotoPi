@@ -9,6 +9,11 @@ from core import sequenceSlideshow
 from time import sleep
 from core import pygameEngine
 import os
+import datetime as dt
+
+# Variables
+LAST_WALLPAPER_DATE = dt.datetime.now()
+LAST_WALLPAPER_NUMBER = 1
 
 # drops other possible connections to the camera on every restart just to be safe
 os.system("sudo pkill gvfs")
@@ -30,7 +35,7 @@ pygameEngine.init(app_name)
 print "Waiting events"
 try:
 	#Default screen between sequences
-	pygameEngine.ActionScreen()
+	pygameEngine.ActionScreen(LAST_WALLPAPER_NUMBER)
 	while True:
 
 		action = pygameEngine.CheckAction()
@@ -39,7 +44,7 @@ try:
 			sequencePhoto.Start()
 			
 			#Default screen between sequences
-			pygameEngine.ActionScreen()
+			pygameEngine.ActionScreen(LAST_WALLPAPER_NUMBER)
 			pygameEngine.ClearActionsQueue()
 		if(action == 2):
 			pygameEngine.SoundBip1()
@@ -48,10 +53,17 @@ try:
 			sequenceSlideshow.Start()
 			
 			#Default screen between sequences
-			pygameEngine.ActionScreen()
+			pygameEngine.ActionScreen(LAST_WALLPAPER_NUMBER)
 			pygameEngine.ClearActionsQueue()
                 if(action == 9):
                         break
+		print dt.datetime.now() > LAST_WALLPAPER_DATE + dt.timedelta(minutes=1)
+		if(dt.datetime.now() > LAST_WALLPAPER_DATE + dt.timedelta(minutes=1)):
+			LAST_WALLPAPER_DATE = dt.datetime.now()
+			LAST_WALLPAPER_NUMBER = LAST_WALLPAPER_NUMBER + 1
+			if(LAST_WALLPAPER_NUMBER > 4) : LAST_WALLPAPER_NUMBER = 1
+			pygameEngine.ActionScreen(LAST_WALLPAPER_NUMBER)
+			print "########################## change"
 
 except:
 	raise

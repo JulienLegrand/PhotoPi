@@ -30,7 +30,10 @@ CMD_LIVE_PREVIEW_PLAY = "omxplayer {filename} --live"
 
 # Media
 DEBUG_FILE = "media/debug.jpg"
-ACTION_SCREEN_FILE = "media/Action-screen.jpg"
+ACTION_SCREEN_FILE1 = "media/action-screen-1.jpg"
+ACTION_SCREEN_FILE2 = "media/action-screen-2.jpg"
+ACTION_SCREEN_FILE3 = "media/action-screen-3.jpg"
+ACTION_SCREEN_FILE4 = "media/action-screen-4.jpg"
 WAIT_LOGO_FILE = "media/wait.gif"
 WAIT_SOUND_FILE = "media/Waiting.wav"
 BEEP01_SOUND_FILE = "media/beep-01.wav"
