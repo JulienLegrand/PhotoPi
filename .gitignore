@@ -1,13 +1,5 @@
 # Custom rules
 
-livepreview-temp/
-photo-captures/
-photo-composites/
-stopmotion-captures/
-stopmotion-composites/
-stopmotion-temp/
-videos/
-
 # Created by https://www.gitignore.io/api/python
 
 ### Python ###

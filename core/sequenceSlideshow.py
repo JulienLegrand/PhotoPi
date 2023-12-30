@@ -40,6 +40,7 @@ def ShowPhoto(photoFile):
 def CyclePhoto():
 	filelist = [ f for f in os.listdir(config.SEQUENCE_PHOTO_COMPOSITES) ]
 	filelist.sort()
+	filelist = [ f for f in filelist if not ".gitignore" in f]
 	for f in reversed(filelist):
 		res = ShowPhoto(config.SEQUENCE_PHOTO_COMPOSITES + "/" + f)
 		pygameEngine.SoundBip3()
