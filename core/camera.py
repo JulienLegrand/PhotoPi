@@ -25,7 +25,7 @@ def WaitCamera():
 
 def TakePhoto(photoFile):
 	if(not config.DEBUG):
-		os.popen(config.CMD_PHOTO.format(filename = photoFile))
+		sub.run(config.CMD_PHOTO.format(filename = photoFile), shell=True)
 	else:
 		sleep(3) #Simulate shoot time
 		copyfile(config.DEBUG_FILE, photoFile)
@@ -33,9 +33,9 @@ def TakePhoto(photoFile):
 def RecordPreview(liveMovie, previewDuration):
 	if(config.DEBUG):
 		return
-	os.popen(config.CMD_MOVIE.format(filename = liveMovie, duration = str(previewDuration)) + " &")
+	sub.run(config.CMD_MOVIE.format(filename = liveMovie, duration = str(previewDuration)), shell=True)
 
 def RecordMovie(movieFile, previewDuration):
 	if(config.DEBUG):
 		return
-	os.popen(config.CMD_MOVIE.format(filename = movieFile, duration = str(previewDuration)))
+	sub.run(config.CMD_MOVIE.format(filename = movieFile, duration = str(previewDuration)), shell=True)
