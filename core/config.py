@@ -21,6 +21,7 @@ CMD_CHECK = "gphoto2 --summary"
 CMD_PHOTO = "gphoto2 --capture-image-and-download --filename {filename} --force-overwrite"
 
 # Media
+PLAY_SOUND = False
 DEBUG_FILE = "media/debug.jpg"
 ACTION_SCREEN_FILE1 = "media/action-screen-1.jpg"
 ACTION_SCREEN_FILE2 = "media/action-screen-2.jpg"

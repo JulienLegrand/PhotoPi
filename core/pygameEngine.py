@@ -116,20 +116,24 @@ def WaitLogo():
 	pygame.display.update()
 
 def SoundBip1():
-	soundBeep = pygame.mixer.Sound(config.BEEP01_SOUND_FILE)
-	soundBeep.play()
+	if(config.PLAY_SOUND):
+		soundBeep = pygame.mixer.Sound(config.BEEP01_SOUND_FILE)
+		soundBeep.play()
 
 def SoundBip2():
-	soundBeep = pygame.mixer.Sound(config.BEEP02_SOUND_FILE)
-	soundBeep.play()
+	if(config.PLAY_SOUND):
+		soundBeep = pygame.mixer.Sound(config.BEEP02_SOUND_FILE)
+		soundBeep.play()
 
 def SoundBip3():
-	soundBeep = pygame.mixer.Sound(config.BEEP03_SOUND_FILE)
-	soundBeep.play()
+	if(config.PLAY_SOUND):
+		soundBeep = pygame.mixer.Sound(config.BEEP03_SOUND_FILE)
+		soundBeep.play()
 
 def SoundWait():
-	waitSound = pygame.mixer.Sound(config.WAIT_SOUND_FILE)
-	waitSound.play()
+	if(config.PLAY_SOUND):
+		waitSound = pygame.mixer.Sound(config.WAIT_SOUND_FILE)
+		waitSound.play()
 
 def ShowError():
 	SCREEN.fill(BLUE_COLOR)
