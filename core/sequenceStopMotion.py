@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import config
+import core.config as config
 from time import sleep
 import datetime as dt
 import os
@@ -8,9 +8,9 @@ from shutil import copyfile
 import subprocess as sub
 import pygame
 import os.path
-import pygameEngine
-import livePreview
-import camera
+import core.pygameEngine as pygameEngine
+import core.livePreview as livePreview
+import core.camera as camera
 import sys
 
 def Init():
@@ -53,7 +53,7 @@ def TakePictures():
     return photoFile
 
 def Composite(photoFile):
-    print "Prepare images"
+    print("Prepare images")
 
     #Play sound
     waitSound = pygame.mixer.Sound(config.WAIT_SOUND_FILE)
@@ -84,17 +84,17 @@ def Composite(photoFile):
         os.rename(config.SEQUENCE_STOPMOTION_TEMP + "/" + f, config.SEQUENCE_STOPMOTION_TEMP + "/" + photoFile + "-" + str(i).zfill(3) + ".jpg")
         i+=1
 
-    print "Encode video"
+    print("Encode video")
     #os.popen don't work for this, don't know why
     p = sub.Popen(config.CMD_ENCODE.format(image_folder = config.SEQUENCE_STOPMOTION_TEMP, filename = config.SEQUENCE_STOPMOTION_TEMP + "/" + photoFile + ".mp4"), stdout=sub.PIPE, stderr=sub.PIPE, shell=True)
     p.wait()
 
-    print "Add music"
+    print("Add music")
     #Add music
     p = sub.Popen(config.CMD_ADD_MUSIC.format(filename_in = config.SEQUENCE_STOPMOTION_TEMP + "/" + photoFile + ".mp4", filename_music = config.MUSIC_FILE, filename_out = config.SEQUENCE_STOPMOTION_COMPOSITES + "/" + photoFile + ".mp4"), stdout=sub.PIPE, stderr=sub.PIPE, shell=True)
     p.wait()
 
-    print "Play"
+    print("Play")
     #Play
     pygameEngine.Fill(pygameEngine.BLACK_COLOR)
     os.popen(config.CMD_STOPMOTION_PLAY.format(filename = config.SEQUENCE_STOPMOTION_COMPOSITES + "/" + photoFile + ".mp4"))
@@ -104,17 +104,17 @@ def Clear():
 	filelist = [ f for f in os.listdir(config.SEQUENCE_STOPMOTION_TEMP) ]
 	for f in filelist:
 		os.remove(config.SEQUENCE_STOPMOTION_TEMP + "/" + f)
-	
+
 def Start():
     try:
-        print "Stop-Motion Start"
+        print("Stop-Motion Start")
         livePreview.Start()
         Init()
         photoFile = TakePictures()
         Composite(photoFile)
 
         #Clear()
-        print "Stop-Motion End"
-    except Exception, e:
-        print "ERREUR : Stop-Motion : " + str(sys.exc_info()[0]) + " : " + str(e)
+        print("Stop-Motion End")
+    except Exception as e:
+        print("ERREUR : Stop-Motion : " + str(sys.exc_info()[0]) + " : " + str(e))
         pygameEngine.ShowError()

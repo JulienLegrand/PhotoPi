@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import config
+import core.config as config
 import os
 import subprocess as sub
 from time import sleep
@@ -22,19 +22,19 @@ def WaitCamera():
 	while(CheckCamera() == 0):
 		sleep(.1)
 		if(CheckCamera() == -1) : raise Exception('No camera detected!')
-		
+
 def TakePhoto(photoFile):
 	if(not config.DEBUG):
 		os.popen(config.CMD_PHOTO.format(filename = photoFile))
 	else:
 		sleep(3) #Simulate shoot time
 		copyfile(config.DEBUG_FILE, photoFile)
-	
+
 def RecordPreview(liveMovie, previewDuration):
 	if(config.DEBUG):
 		return
 	os.popen(config.CMD_MOVIE.format(filename = liveMovie, duration = str(previewDuration)) + " &")
-		
+
 def RecordMovie(movieFile, previewDuration):
 	if(config.DEBUG):
 		return

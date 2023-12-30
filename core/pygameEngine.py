@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import config
+import core.config as config
 import pygame
 from time import sleep
 import RPi.GPIO as GPIO
@@ -24,18 +24,18 @@ ACTION_SCREEN_SET = {
 	}
 
 def init(app_name):
-	print "pygame init"
+	print("pygame init")
 	pygame.init()
 	pygame.mouse.set_visible(False)
 	pygame.display.set_caption(app_name)
-	
+
 def GetScreen():
 	return SCREEN
 
 def Fill(color):
 	SCREEN.fill(color)
 	pygame.display.update()
-	
+
 def CheckAction(): #Return -1 (idle) or 1 or 2 (Sequence 1 or 2) or 9 (exit)
     # get one pygame event
     event = pygame.event.poll()
@@ -58,7 +58,7 @@ def ClearActionsQueue():
 def DrawCenterMessage(message, big = False, withSleep = True):
 	"""displays notification messages onto the SCREEN"""
 	FONTsize = 160 if big else 60
-		
+
 	SCREEN.fill(BLACK_COLOR)
 	TextSurf = pygame.font.SysFont(config.FONT, FONTsize).render(message, True, WHITE_COLOR)
 	TextRect = TextSurf.get_rect()
@@ -76,7 +76,7 @@ def DrawTopMessage(message):
 	TextRect.center = ((config.WIDTH / 2), (80))
 	SCREEN.blit(TextSurf, TextRect)
 	pygame.display.update()
-	
+
 def ShowNavButtons():
 	# Quit
 	pygame.draw.circle(SCREEN, BLUE_COLOR, (1080,960), 50, 0)
@@ -84,16 +84,16 @@ def ShowNavButtons():
 	TextRect = TextSurf.get_rect()
 	TextRect.center = (1080,960)
 	SCREEN.blit(TextSurf, TextRect)
-	
+
 	# Cycle
 	pygame.draw.circle(SCREEN, YELLOW_COLOR, (1200,960), 50, 0)
 	TextSurf = pygame.font.SysFont(config.FONT, 40).render(config.PREC_BTON_MSG, True, WHITE_COLOR)
 	TextRect = TextSurf.get_rect()
 	TextRect.center = (1200,960)
 	SCREEN.blit(TextSurf, TextRect)
-	
+
 	pygame.display.update()
-	
+
 def ActionScreen(number):
 	image = pygame.image.load(ACTION_SCREEN_SET[number])
 	SCREEN.blit(image, (0,0))
@@ -122,7 +122,7 @@ def SoundBip1():
 def SoundBip2():
 	soundBeep = pygame.mixer.Sound(config.BEEP02_SOUND_FILE)
 	soundBeep.play()
-	
+
 def SoundBip3():
 	soundBeep = pygame.mixer.Sound(config.BEEP03_SOUND_FILE)
 	soundBeep.play()
@@ -130,10 +130,10 @@ def SoundBip3():
 def SoundWait():
 	waitSound = pygame.mixer.Sound(config.WAIT_SOUND_FILE)
 	waitSound.play()
-	
+
 def ShowError():
 	SCREEN.fill(BLUE_COLOR)
 	DrawCenterMessage("Erreur", True, True)
-	
+
 def Quit():
 	pygame.quit()

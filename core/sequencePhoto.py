@@ -1,16 +1,16 @@
 #!/usr/bin/env python
 
-import config
+import core.config as config
 from time import sleep
 import datetime as dt
 import os
 import pygame
 import os.path
-import pygameEngine
-import livePreview
-import camera
+import core.pygameEngine as pygameEngine
+import core.livePreview as livePreview
+import core.camera as camera
 import sys
-import mail
+import core.mail as mail
 
 def TakePictures():
 	#Attribute a name with current time for all photos and composite
@@ -20,7 +20,7 @@ def TakePictures():
 	pic3 = TakeOnePicture(config.SEQUENCE_PHOTO_MSG3, photoFile + "-3")
 	pic4 = TakeOnePicture(config.SEQUENCE_PHOTO_MSG4, photoFile + "-4")
 	return Composite(pic1, pic2, pic3, pic4, photoFile)
-	
+
 def TakeOnePicture(message, photoFile):
 	pygameEngine.DrawCenterMessage("3", True)
 	pygameEngine.DrawCenterMessage("2", True)
@@ -46,19 +46,19 @@ def photoLoad(file):
 		if (dt.datetime.now() - dtStart).seconds / 60 > 1 : raise Exception('No image taken')  # special way out if no image appears
 		sleep(.1)
 	return pygame.image.load(file).convert()
-	
+
 def Composite(pic1, pic2, pic3, pic4, photoFile):
 	screen = pygameEngine.GetScreen()
 
 	#Play sound
 	pygameEngine.SoundWait()
 
-	#Create composite image 
+	#Create composite image
 	pygameEngine.WaitLogo()
 	borderWidth = 20
-	imageWidth = (config.WIDTH - 3 * borderWidth) / 2
-	imageHeight = imageWidth * 2/3 #only work in landscape mode with 3/2 ratio
-	borderHeight = (config.HEIGHT - 2 * imageHeight) / 3
+	imageWidth = (config.WIDTH - 3 * borderWidth) // 2
+	imageHeight = imageWidth * 2 // 3 #only work in landscape mode with 3/2 ratio
+	borderHeight = (config.HEIGHT - 2 * imageHeight) // 3
 
 	#Photos loading
 	pbimage1Raw = photoLoad(pic1)
@@ -102,7 +102,7 @@ def Composite(pic1, pic2, pic3, pic4, photoFile):
 	photoSurface.blit(pbimage2, (2 * borderWidth + imageWidth, borderHeight))
 	photoSurface.blit(pbimage3, (borderWidth, 2 * borderHeight + imageHeight))
 	photoSurface.blit(pbimage4, (2 * borderWidth + imageWidth, 2 * borderHeight + imageHeight))
-		
+
 	#Save
 	if not os.path.isdir(config.SEQUENCE_PHOTO_COMPOSITES) :
 		os.makedirs(config.SEQUENCE_PHOTO_COMPOSITES)
@@ -115,16 +115,16 @@ def Composite(pic1, pic2, pic3, pic4, photoFile):
 def SendMail(compositePhoto):
 	if not config.MAIL :
 		return
-	print "Send mail"
+	print("Send mail")
 	mail.send_mail(config.MAIL_FROM, config.MAIL_TO, config.MAIL_SUBJECT, config.MAIL_TEXT, [compositePhoto], config.MAIL_SMTP, config.MAIL_SMTP_USER, config.MAIL_SMTP_PWD)
-	
+
 def Start():
 	try:
-		print "Photo Start"
+		print("Photo Start")
 		livePreview.Start()
 		compositePhoto = TakePictures()
 		SendMail(compositePhoto)
 		pygameEngine.SoundBip3()
-	except Exception, e:
-		print "ERREUR : Photo : " + str(sys.exc_info()[0]) + " : " + str(e)
+	except Exception as e:
+		print("ERREUR : Photo : " + str(sys.exc_info()[0]) + " : " + str(e))
 		pygameEngine.ShowError()

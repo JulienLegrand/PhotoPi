@@ -21,7 +21,7 @@ os.environ['SDL_VIDEO_WINDOW_POS'] = "0,0"
 
 #Init app
 app_name = "PhotoPi"
-print app_name + " started"
+print(app_name + " started")
 sleep(2)
 
 #Self test
@@ -32,7 +32,7 @@ if(camera.CheckCamera() == -1):
 pygameEngine.init(app_name)
 
 # Boucle principale
-print "Waiting events"
+print("Waiting events")
 try:
 	#Default screen between sequences
 	pygameEngine.ActionScreen(LAST_WALLPAPER_NUMBER)
@@ -42,7 +42,6 @@ try:
 		if(action == 1):
 			pygameEngine.SoundBip1()
 			sequencePhoto.Start()
-			
 			#Default screen between sequences
 			pygameEngine.ActionScreen(LAST_WALLPAPER_NUMBER)
 			pygameEngine.ClearActionsQueue()
@@ -51,23 +50,21 @@ try:
 			#sequenceVideo.Start()
 			#sequenceStopMotion.Start()
 			sequenceSlideshow.Start()
-			
 			#Default screen between sequences
 			pygameEngine.ActionScreen(LAST_WALLPAPER_NUMBER)
 			pygameEngine.ClearActionsQueue()
-                if(action == 9):
-                        break
-		print dt.datetime.now() > LAST_WALLPAPER_DATE + dt.timedelta(minutes=1)
+		if(action == 9):
+			break
 		if(dt.datetime.now() > LAST_WALLPAPER_DATE + dt.timedelta(minutes=1)):
 			LAST_WALLPAPER_DATE = dt.datetime.now()
 			LAST_WALLPAPER_NUMBER = LAST_WALLPAPER_NUMBER + 1
 			if(LAST_WALLPAPER_NUMBER > 4) : LAST_WALLPAPER_NUMBER = 1
 			pygameEngine.ActionScreen(LAST_WALLPAPER_NUMBER)
-			print "########################## change"
+			print("########################## change")
 
 except:
 	raise
 finally:
 	# Fin
-	print "End"
+	print("End")
 	pygameEngine.Quit()

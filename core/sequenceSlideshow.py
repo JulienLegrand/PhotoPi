@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 
-import config
+import core.config as config
 from time import sleep
 import datetime as dt
 import os
 import pygame
 import os.path
-import pygameEngine
-import livePreview
-import camera
+import core.pygameEngine as pygameEngine
+import core.livePreview as livePreview
+import core.camera as camera
 import sys
 import RPi.GPIO as GPIO
 
@@ -36,7 +36,7 @@ def ShowPhoto(photoFile):
 		# Button Esc or Q = Quit keys
 		if event.type == pygame.KEYDOWN and (event.key == pygame.K_ESCAPE or event.key == pygame.K_q) :
 			return -1
-			
+
 def CyclePhoto():
 	filelist = [ f for f in os.listdir(config.SEQUENCE_PHOTO_COMPOSITES) ]
 	filelist.sort()
@@ -47,8 +47,8 @@ def CyclePhoto():
 
 def Start():
     try:
-        print "Slideshow Start"
+        print("Slideshow Start")
         CyclePhoto()
-    except Exception, e:
-        print "ERREUR : Slideshow : " + str(sys.exc_info()[0]) + " : " + str(e)
+    except Exception as e:
+        print("ERREUR : Slideshow : " + str(sys.exc_info()[0]) + " : " + str(e))
         pygameEngine.ShowError()
