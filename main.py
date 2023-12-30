@@ -3,8 +3,6 @@
 import core
 from core import camera
 from core import sequencePhoto
-from core import sequenceVideo
-from core import sequenceStopMotion
 from core import sequenceSlideshow
 from time import sleep
 from core import pygameEngine
@@ -47,8 +45,6 @@ try:
 			pygameEngine.ClearActionsQueue()
 		if(action == 2):
 			pygameEngine.SoundBip1()
-			#sequenceVideo.Start()
-			#sequenceStopMotion.Start()
 			sequenceSlideshow.Start()
 			#Default screen between sequences
 			pygameEngine.ActionScreen(LAST_WALLPAPER_NUMBER)

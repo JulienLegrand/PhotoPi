@@ -7,7 +7,6 @@ import os
 import pygame
 import os.path
 import core.pygameEngine as pygameEngine
-import core.livePreview as livePreview
 import core.camera as camera
 import sys
 import core.mail as mail
@@ -121,7 +120,6 @@ def SendMail(compositePhoto):
 def Start():
 	try:
 		print("Photo Start")
-		livePreview.Start()
 		compositePhoto = TakePictures()
 		SendMail(compositePhoto)
 		pygameEngine.SoundBip3()
