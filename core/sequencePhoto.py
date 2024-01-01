@@ -42,7 +42,8 @@ def TakeOnePicture(message, photoFile):
 def photoLoad(file):
 	dtStart = dt.datetime.now()
 	while os.path.exists(file) == False: # Wait for creation
-		if (dt.datetime.now() - dtStart).seconds / 60 > 1 : raise Exception('No image taken')  # special way out if no image appears
+		if (dt.datetime.now() - dtStart).seconds / 60 > 1 :
+			raise Exception('No image taken')  # special way out if no image appears
 		sleep(.1)
 	return pygame.image.load(file).convert()
 
@@ -83,7 +84,7 @@ def Composite(pic1, pic2, pic3, pic4, photoFile):
 		screen.blit(pbimage4, (2 * borderWidth + imageWidth, 2 * borderHeight + imageHeight))
 		pygame.display.flip()
 		#pygame.time.delay(5) #To slow down animation
-		i += 5 #To speed up animation
+		i += 2  #To speed up animation
 
 	#Composition only for saving photo file
 	ratio = 3
